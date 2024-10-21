@@ -1,2 +1,2 @@
-# CodeCraft_Full-Stack-Unity-Developer
-Homework from the course Full-Stack Unity Developer
+# CodeCraft Full-Stack Unity Developer
+Homework from the course <a href="https://unitycodecraft.ru/">Full-Stack Unity Developer<a/>
