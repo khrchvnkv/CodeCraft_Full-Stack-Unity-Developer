@@ -46,8 +46,8 @@ namespace Common
 
         public void Despawn(in T instance)
         {
-            _activeInstances.Remove(instance);
             instance.transform.SetParent(_container);
+            _activeInstances.Remove(instance);
             _pool.Enqueue(instance);
         }
     }

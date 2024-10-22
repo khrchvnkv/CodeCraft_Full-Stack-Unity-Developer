@@ -13,7 +13,7 @@ namespace Characters.EnemyLogic
 
         [SerializeField] private Transform[] _spawnPositions;
         [SerializeField] private Transform[] _attackPositions;
-        [SerializeField] private Player _character;
+        [SerializeField] private PlayerConstructor _character;
         [SerializeField] private Transform _worldTransform;
         [SerializeField] private Transform _container;
         [SerializeField] private EnemyConstructor _prefab;
