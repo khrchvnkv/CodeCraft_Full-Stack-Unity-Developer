@@ -15,40 +15,40 @@ namespace Level
         
         [SerializeField] private Params _params;
         
-        private float startPositionY;
-        private float endPositionY;
-        private float movingSpeedY;
-        private float positionX;
-        private float positionZ;
+        private float _startPositionY;
+        private float _endPositionY;
+        private float _movingSpeedY;
+        private float _positionX;
+        private float _positionZ;
 
-        private Transform myTransform;
+        private Transform _transform;
         
         private void Awake()
         {
-            startPositionY = _params.StartPositionY;
-            endPositionY = _params.EndPositionY;
-            movingSpeedY = _params.MovingSpeedY;
-            myTransform = transform;
-            var position = myTransform.position;
-            positionX = position.x;
-            positionZ = position.z;
+            _startPositionY = _params.StartPositionY;
+            _endPositionY = _params.EndPositionY;
+            _movingSpeedY = _params.MovingSpeedY;
+            _transform = transform;
+            var position = _transform.position;
+            _positionX = position.x;
+            _positionZ = position.z;
         }
 
         private void FixedUpdate()
         {
-            if (myTransform.position.y <= endPositionY)
+            if (_transform.position.y <= _endPositionY)
             {
-                myTransform.position = new Vector3(
-                    positionX,
-                    startPositionY,
-                    positionZ
+                _transform.position = new Vector3(
+                    _positionX,
+                    _startPositionY,
+                    _positionZ
                 );
             }
 
-            myTransform.position -= new Vector3(
-                positionX,
-                movingSpeedY * Time.fixedDeltaTime,
-                positionZ
+            _transform.position -= new Vector3(
+                _positionX,
+                _movingSpeedY * Time.fixedDeltaTime,
+                _positionZ
             );
         }
     }
