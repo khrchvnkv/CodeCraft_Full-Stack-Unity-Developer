@@ -36,7 +36,7 @@ namespace Characters.EnemyLogic
             _currentTime -= Time.fixedDeltaTime;
             if (IsTimerExpired)
             {
-                base.Shoot();
+                CreateBullet();
                 ResetTimer();
             }
         }

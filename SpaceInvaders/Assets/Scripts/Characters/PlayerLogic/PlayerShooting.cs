@@ -11,7 +11,9 @@ namespace Characters.PlayerLogic
         [SerializeField] private BulletFactory _bulletFactory;
         
         protected override BulletFactory BulletFactory => _bulletFactory;
-        
+
+        public override void Shoot() => CreateBullet();
+
         protected override Vector3 GetShootDirection() => 
             _firePoint.rotation * Vector3.up * 3;
     }

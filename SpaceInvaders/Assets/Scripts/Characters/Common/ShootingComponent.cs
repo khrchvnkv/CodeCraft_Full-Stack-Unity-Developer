@@ -15,7 +15,7 @@ namespace Characters.Common
 
         protected abstract BulletFactory BulletFactory { get; }
         
-        public virtual void Shoot()
+        protected void CreateBullet()
         {
             BulletFactory.SpawnBullet(
                 _firePoint.position,
@@ -26,6 +26,7 @@ namespace Characters.Common
             );
         }
 
+        public abstract void Shoot();
         protected abstract Vector3 GetShootDirection();
     }
 }
