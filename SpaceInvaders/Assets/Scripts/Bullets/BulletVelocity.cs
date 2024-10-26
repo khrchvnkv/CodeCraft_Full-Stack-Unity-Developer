@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace Bullets
 {
-    public class BulletVelocity : MonoBehaviour
+    [Serializable]
+    public class BulletVelocity
     {
         [SerializeField] private Rigidbody2D _rigidbody2D;
         

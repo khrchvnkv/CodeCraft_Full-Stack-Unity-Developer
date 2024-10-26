@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace Services.Input
 {
-    public class InputController : MonoBehaviour
+    [Serializable]
+    public class PlayerInput
     {
         public bool IsFireRequired() => 
             UnityEngine.Input.GetKeyDown(KeyCode.Space);

@@ -1,4 +1,4 @@
-namespace Characters
+namespace Characters.Common
 {
     public interface IDamageable
     {

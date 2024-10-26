@@ -8,11 +8,7 @@ namespace Common
         private readonly T _prefab;
         private readonly Transform _container;
         private readonly Queue<T> _pool = new();
-
-        private readonly HashSet<T> _activeInstances = new();
-
-        public IEnumerable<T> ActiveInstances => _activeInstances;
-
+        
         public Pool(in T prefab, in Transform container)
         {
             _prefab = prefab;
@@ -39,7 +35,6 @@ namespace Common
             {
                 instance = Object.Instantiate(_prefab, parent);
             }
-            _activeInstances.Add(instance);
             
             return instance;
         }
@@ -47,7 +42,6 @@ namespace Common
         public void Despawn(in T instance)
         {
             instance.transform.SetParent(_container);
-            _activeInstances.Remove(instance);
             _pool.Enqueue(instance);
         }
     }

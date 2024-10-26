@@ -1,10 +1,12 @@
 using System;
 using Characters;
+using Characters.Common;
 using UnityEngine;
 
 namespace Bullets
 {
-    public class BulletCollision : MonoBehaviour
+    [Serializable]
+    public class BulletCollision
     {
         private int _damage;
         
@@ -12,7 +14,7 @@ namespace Bullets
 
         public void SetDamage(in int damage) => _damage = damage;
         
-        private void OnCollisionEnter2D(Collision2D collision)
+        public void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.TryGetComponent(out IDamageable damageable))
             {

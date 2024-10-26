@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace Characters
+namespace Characters.Common
 {
-    public class HealthComponent : MonoBehaviour, IDamageable
+    [Serializable]
+    public class HealthComponent
     {
         [SerializeField] private int _health;
 

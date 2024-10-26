@@ -1,23 +1,18 @@
-using Bullets;
-using Common;
+using System;
+using Bullets.Factory;
+using Characters.Common;
 using UnityEngine;
 
 namespace Characters.PlayerLogic
 {
-    public sealed class PlayerShooting : MonoBehaviour
+    [Serializable]
+    public class PlayerShooting : ShootingComponent
     {
-        [SerializeField] private Transform _firePoint;
-        [SerializeField] private BulletManager _bulletManager;
-
-        public void Shoot()
-        {
-            _bulletManager.SpawnBullet(
-                _firePoint.position,
-                Color.blue,
-                (int) PhysicsLayer.PLAYER_BULLET,
-                1,
-                _firePoint.rotation * Vector3.up * 3
-            );
-        }
+        [SerializeField] private BulletFactory _bulletFactory;
+        
+        protected override BulletFactory BulletFactory => _bulletFactory;
+        
+        protected override Vector3 GetShootDirection() => 
+            _firePoint.rotation * Vector3.up * 3;
     }
 }

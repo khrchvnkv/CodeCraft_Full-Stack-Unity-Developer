@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace Bullets
 {
-    public sealed class BulletView : MonoBehaviour
+    [Serializable]
+    public sealed class BulletView
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
