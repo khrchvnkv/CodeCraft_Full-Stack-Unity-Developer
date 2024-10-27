@@ -15,7 +15,7 @@ namespace Characters.EnemyLogic
         private IEnemyDespawnCallback _despawnCallback;
 
         public void Construct(
-            in BulletFactory bulletFactory,
+            in IBulletFactory bulletFactory,
             in Player playerShooting, 
             in Vector2 startPoint,
             in Vector2 endPoint, 
