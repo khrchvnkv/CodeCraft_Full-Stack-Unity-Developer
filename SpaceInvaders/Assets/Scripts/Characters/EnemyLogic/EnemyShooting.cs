@@ -11,16 +11,16 @@ namespace Characters.EnemyLogic
     {
         [SerializeField] private float _countdown;
 
-        private BulletFactory _bulletFactory;
+        private IBulletFactory _bulletFactory;
         private Player _target;
         private float _currentTime;
 
         private bool IsTimerExpired => _currentTime <= 0;
         
-        protected override BulletFactory BulletFactory => _bulletFactory;
+        protected override IBulletFactory BulletFactory => _bulletFactory;
 
         public void Construct(
-            BulletFactory bulletFactory,
+            IBulletFactory bulletFactory,
             Player player)
         {
             _bulletFactory = bulletFactory;

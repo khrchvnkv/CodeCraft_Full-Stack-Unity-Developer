@@ -13,7 +13,7 @@ namespace Characters.Common
         [SerializeField] private int _damage;
         [SerializeField] private Color _bulletColor;
 
-        protected abstract BulletFactory BulletFactory { get; }
+        protected abstract IBulletFactory BulletFactory { get; }
         
         protected void CreateBullet()
         {

@@ -10,7 +10,7 @@ namespace Characters.PlayerLogic
     {
         [SerializeField] private BulletFactory _bulletFactory;
         
-        protected override BulletFactory BulletFactory => _bulletFactory;
+        protected override IBulletFactory BulletFactory => _bulletFactory;
 
         public override void Shoot() => CreateBullet();
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Bullets.Factory
 {
-    public class BulletFactory : MonoBehaviour, IBulletDestroyCallback
+    public class BulletFactory : MonoBehaviour, IBulletFactory, IBulletDestroyCallback
     {
         private const int StartPoolSize = 10;
 
