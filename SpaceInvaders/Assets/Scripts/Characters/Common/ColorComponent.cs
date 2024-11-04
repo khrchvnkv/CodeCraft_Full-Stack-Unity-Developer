@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace Bullets
+namespace Characters.Common
 {
     [Serializable]
-    public sealed class BulletView
+    public sealed class ColorComponent 
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
 

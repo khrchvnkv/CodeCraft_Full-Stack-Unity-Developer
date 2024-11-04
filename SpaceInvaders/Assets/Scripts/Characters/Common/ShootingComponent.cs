@@ -6,27 +6,35 @@ using UnityEngine;
 namespace Characters.Common
 {
     [Serializable]
-    public abstract class ShootingComponent
+    public class ShootingComponent
     {
-        [SerializeField] protected Transform _firePoint;
+        [SerializeField] private Transform _firePoint;
         [SerializeField] private PhysicsLayer _layer;
         [SerializeField] private int _damage;
         [SerializeField] private Color _bulletColor;
 
-        protected abstract IBulletFactory BulletFactory { get; }
+        private IBulletFactory _bulletFactory;
         
-        protected void CreateBullet()
+        public void Construct(IBulletFactory bulletFactory)
         {
-            BulletFactory.SpawnBullet(
+            _bulletFactory = bulletFactory;
+        }
+
+        public void Shoot(Vector2 direction)
+        {
+            direction = direction.normalized;
+            CreateBullet(direction);
+        }
+
+        private void CreateBullet(in Vector2 shootingDirection)
+        {
+            _bulletFactory.SpawnBullet(
                 _firePoint.position,
                 _bulletColor,
                 (int) _layer,
                 _damage,
-                GetShootDirection()
+                shootingDirection
             );
         }
-
-        public abstract void Shoot();
-        protected abstract Vector3 GetShootDirection();
     }
 }

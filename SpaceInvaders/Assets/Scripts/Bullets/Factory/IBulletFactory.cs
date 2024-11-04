@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Bullets.Factory
 {
-    public interface IBulletFactory
+    public interface IBulletFactory : IBulletDestroyCallback
     {
         Bullet SpawnBullet(
             Vector2 position,
@@ -11,7 +11,5 @@ namespace Bullets.Factory
             int damage,
             Vector2 velocity
         );
-
-        void DespawnBullet(in Bullet bullet);
     }
 }

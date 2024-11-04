@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace Characters.Common
 {
-    [Serializable]
-    public class HealthComponent
+    public class HealthComponent : MonoBehaviour
     {
         [SerializeField] private int _health;
 

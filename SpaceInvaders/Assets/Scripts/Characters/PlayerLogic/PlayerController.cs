@@ -5,7 +5,9 @@ namespace Characters.PlayerLogic
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private Player _player;
+        private static readonly Vector2 ShootingDirection = Vector2.up;
+        
+        [SerializeField] private Ship _player;
         [SerializeField] private PlayerInput _input;
 
         private bool _fireRequired;
@@ -26,7 +28,7 @@ namespace Characters.PlayerLogic
             _player.Move(_moveDirectionX);
             if (_fireRequired)
             {
-                _player.Shoot();
+                _player.Shoot(ShootingDirection);
                 _fireRequired = false;
             }
         }

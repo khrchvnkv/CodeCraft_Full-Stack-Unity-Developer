@@ -1,7 +1,9 @@
+using Characters.EnemyLogic.AIAgents;
+
 namespace Characters.EnemyLogic.Factory
 {
     public interface IEnemyDespawnCallback
     {
-        void Destroy(in Enemy enemy);
+        void Destroy(in EnemyAI enemyAI);
     }
 }

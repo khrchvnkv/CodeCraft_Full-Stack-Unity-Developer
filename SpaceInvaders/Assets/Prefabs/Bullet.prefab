@@ -165,3 +165,4 @@ MonoBehaviour:
     _spriteRenderer: {fileID: 407317769854222589}
   _velocity:
     _rigidbody2D: {fileID: 3555983760417175357}
+    _speed: 3.25

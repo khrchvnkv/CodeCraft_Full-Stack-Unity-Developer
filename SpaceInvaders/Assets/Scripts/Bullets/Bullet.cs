@@ -1,18 +1,19 @@
 using Bullets.Factory;
+using Characters.Common;
 using UnityEngine;
 
 namespace Bullets
 {
     public class Bullet : MonoBehaviour
     {
-        [SerializeField] private BulletCollision _collision;
-        [SerializeField] private BulletView _view;
-        [SerializeField] private BulletVelocity _velocity;
+        [SerializeField] private ColorComponent _view;
+        [SerializeField] private VelocityComponent _velocity;
 
         private IBulletDestroyCallback _destroyCallback;
+        private int _damage;
         
         public Vector2 Position => transform.position;
-
+        
         public void Construct(
             in Vector2 position,
             in Color color,
@@ -25,19 +26,26 @@ namespace Bullets
             gameObject.layer = physicsLayer;
 
             _view.SetColor(color);
-            _collision.SetDamage(damage);
+            SetDamage(damage);
             _velocity.SetVelocity(velocity);
 
             _destroyCallback = destroyCallback;
         }
         
-        private void OnEnable() => _collision.Collided += Collided;
-        
-        private void OnDisable() => _collision.Collided -= Collided;
+        private void SetDamage(in int damage) => _damage = damage;
 
-        private void Collided() => _destroyCallback?.Destroy(this);
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.TryGetComponent(out IDamageable damageable))
+            {
+                OnBulletCollided(damageable);
+            }
+        }
 
-        private void OnCollisionEnter2D(Collision2D other) => 
-            _collision.OnCollisionEnter2D(other);
+        private void OnBulletCollided(in IDamageable damageable)
+        {
+            damageable.DealDamage(_damage);
+            _destroyCallback?.Destroy(this);
+        }
     }
 }

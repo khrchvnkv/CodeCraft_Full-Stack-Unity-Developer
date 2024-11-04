@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace Bullets
 {
-    public sealed class BulletCheckBoundsManager : MonoBehaviour
+    public sealed class BulletBoundsChecker : MonoBehaviour
     {
         [SerializeField] private BulletFactory _bulletFactory;
         [SerializeField] private LevelBounds _levelBounds;
-
+ 
         private readonly List<Bullet> _instances = new(32);
         private readonly List<Bullet> _cache = new(16);
 
