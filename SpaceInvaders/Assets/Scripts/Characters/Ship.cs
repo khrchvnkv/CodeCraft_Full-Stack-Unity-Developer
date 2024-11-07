@@ -1,3 +1,4 @@
+using System;
 using Bullets.Factory;
 using Characters.Common;
 using UnityEngine;
@@ -13,7 +14,13 @@ namespace Characters
         public bool IsAlive => _health.IsAlive;
         public Vector2 Position => _movement.Position;
 
+        public event Action OnDied; 
+
         private void Awake() => ResetState();
+
+        private void OnEnable() => _health.OnHealthEmpty += Died;
+
+        private void OnDisable() => _health.OnHealthEmpty -= Died;
 
         public void ResetState() => _health.ResetHealth();
 
@@ -31,8 +38,9 @@ namespace Characters
         public void Move(in Vector2 direction) => _movement.Move(direction);
 
         public void Shoot(in Vector2 direction) => _shooting.Shoot(direction);
+        
+        private void Died() => OnDied?.Invoke();
 
         void IDamageable.DealDamage(in int damage) => _health.DealDamage(damage);
-
     }
 }

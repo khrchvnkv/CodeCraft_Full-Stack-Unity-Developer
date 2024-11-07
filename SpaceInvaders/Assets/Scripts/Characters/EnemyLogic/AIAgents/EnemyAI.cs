@@ -8,9 +8,10 @@ namespace Characters.EnemyLogic.AIAgents
     {
         [SerializeField] private MovementAgent _movementAgent;
         [SerializeField] private AttackAgent _attackAgent;
-        [SerializeField] private EnemyDeathObserver _deathObserver;
         [SerializeField] private Ship _ship;
 
+        private IEnemyDespawnCallback _enemyDespawnCallback;
+        
         public void Construct(
             in IEnemyDespawnCallback despawnCallback,
             in Ship player,
@@ -22,10 +23,16 @@ namespace Characters.EnemyLogic.AIAgents
             _ship.Construct(bulletFactory);
             _movementAgent.Construct(_ship, startPosition, endPosition);
             _attackAgent.Construct(_ship, player);
-            _deathObserver.Construct(this, despawnCallback);
+            _enemyDespawnCallback = despawnCallback;
         }
+
+        private void OnEnable() => _ship.OnDied += OnShipDied;
         
-        public void FixedUpdate()
+        private void OnDisable() => _ship.OnDied -= OnShipDied;
+
+        private void OnShipDied() => _enemyDespawnCallback?.Destroy(this);
+
+        private void FixedUpdate()
         {
             if (!_movementAgent.TryMove())
             {
