@@ -6,7 +6,7 @@ namespace Inventories
     public sealed class Item
     {
         private static int ID_GEN;
-
+        
         public string Name => this.name;
         public Vector2Int Size => this.size;
 
@@ -14,6 +14,9 @@ namespace Inventories
         private readonly string name;
         private readonly int id;
 
+        static Item()
+        { }
+        
         public Item(string name, Vector2Int size) : this()
         {
             this.name = name;
@@ -53,6 +56,7 @@ namespace Inventories
 
         public bool Equals(Item other)
         {
+            if (other == null) return false;
             return this.id == other.id;
         }
 

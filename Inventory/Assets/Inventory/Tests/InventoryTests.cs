@@ -370,7 +370,7 @@ namespace Inventories
             Assert.AreEqual(height, inventory.Height);
 
             Assert.AreEqual(items.Length, inventory.Count);
-            Assert.AreEqual(items.Select(it => it.Key).ToHashSet(), inventory.ToHashSet());
+            Assert.IsTrue(items.Select(it => it.Key).ToHashSet().SetEquals(inventory.ToHashSet()));
         }
 
         private static IEnumerable<TestCaseData> InstantiateWithItemsCases()
