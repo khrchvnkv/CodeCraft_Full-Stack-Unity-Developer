@@ -229,30 +229,6 @@ namespace Inventories
                     }
                 }
             }
-            
-            // foreach (var itemPair in _itemsMap)
-            // {
-            //     var fits = true;
-            //     var itemPosition = itemPair.Key;
-            //     for (int l = 0; l < sizeY; l++)
-            //     {
-            //         for (int m = 0; m < sizeX; m++)
-            //         {
-            //             var position = new Vector2Int(itemPosition.x + m, itemPosition.y + l);
-            //             if (!InRange(position) || IsOccupied(position))
-            //             {
-            //                 fits = false;
-            //                 break;
-            //             }
-            //         }
-            //     }
-            //
-            //     if (fits)
-            //     {
-            //         freePosition = itemPosition;
-            //         return true;
-            //     }
-            // }
 
             return false;
         }
@@ -281,6 +257,8 @@ namespace Inventories
 
             return !_itemsMap[position].Equals(EmptyItem);
         }
+
+        private bool IsOccupied(in Item item) => item != null && !item.Equals(EmptyItem);
         
         public bool IsOccupied(in int x, in int y) => IsOccupied(new Vector2Int(x, y));
         
@@ -290,7 +268,9 @@ namespace Inventories
         public bool IsFree(in Vector2Int position) => !IsOccupied(position);
 
         public bool IsFree(in int x, in int y) => IsFree(new Vector2Int(y, x));
-        
+
+        private bool IsFree(in Item item) => item != null && !IsOccupied(item);
+
         /// <summary>
         /// Removes a specified item if exists
         /// </summary>
@@ -335,7 +315,7 @@ namespace Inventories
             if (!InRange(position)) throw new IndexOutOfRangeException();
 
             var item = _itemsMap[position];
-            if (item.Equals(EmptyItem)) throw new NullReferenceException();
+            if (IsFree(item)) throw new NullReferenceException();
 
             return item;
         }
@@ -349,7 +329,7 @@ namespace Inventories
 
             var itemInMap = _itemsMap[position];
 
-            if (itemInMap.Equals(EmptyItem)) return false;
+            if (IsFree(itemInMap)) return false;
 
             item = itemInMap;
             return true;
@@ -400,7 +380,7 @@ namespace Inventories
                 {
                     var key = new Vector2Int(j, i);
                     var item = _itemsMap[key];
-                    if (!item.Equals(EmptyItem))
+                    if (IsOccupied(item))
                     {
                         cleared = true;
                         _itemsMap[key] = EmptyItem;
@@ -503,7 +483,7 @@ namespace Inventories
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
                     var item = _itemsMap[new Vector2Int(i, j)];
-                    if (item.Equals(EmptyItem))
+                    if (IsFree(item))
                     {
                         matrix[i, j] = null;
                     }
