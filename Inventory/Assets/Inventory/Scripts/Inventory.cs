@@ -10,8 +10,6 @@ namespace Inventories
 {
     public sealed class Inventory : IEnumerable<Item>
     {
-        private static readonly Item EmptyItem = new("Empty", new Vector2Int(1, 1));
-        
         public event Action<Item, Vector2Int> OnAdded;
         public event Action<Item, Vector2Int> OnRemoved;
         public event Action<Item, Vector2Int> OnMoved;
@@ -19,29 +17,13 @@ namespace Inventories
         
         private readonly int _width;
         private readonly int _height;
-        private readonly Dictionary<Vector2Int, Item> _itemsMap;
-        private readonly Item _emptyItem;
+        private readonly Dictionary<Item, Vector2Int> _itemsMap;
+        private readonly Item[,] _cells;
         
         public int Width => _width;
         public int Height => _height;
         
-        public int Count
-        {
-            get
-            {
-                var set = new HashSet<Item>();
-                foreach (var itemPair in _itemsMap)
-                {
-                    var item = itemPair.Value;
-                    if (item != null && !item.Equals(EmptyItem))
-                    {
-                        set.Add(item);
-                    }
-                }
-        
-                return set.Count;
-            }
-        }
+        public int Count => _itemsMap.Keys.Count;
 
         public Inventory(in int width, in int height)
         {
@@ -52,15 +34,8 @@ namespace Inventories
             
             _width = width;
             _height = height;
-            _itemsMap = new Dictionary<Vector2Int, Item>();
-            
-            for (int i = 0; i < _height; i++)
-            {
-                for (int j = 0; j < _width; j++)
-                {
-                    _itemsMap.TryAdd(new Vector2Int(i, j), EmptyItem);
-                }
-            }
+            _itemsMap = new Dictionary<Item, Vector2Int>();
+            _cells = new Item[_width, _height];
         }
         
         public Inventory(
@@ -119,7 +94,12 @@ namespace Inventories
             }
         }
 
-        private bool InRange(in Vector2Int position) => _itemsMap.ContainsKey(position);
+        private bool InRange(in Vector2Int position)
+        {
+            var x = position.x;
+            var y = position.y;
+            return x >= 0 && x < _width && y >= 0 && y < _height;
+        }
 
         private bool IsCorrectSize(in Vector2Int size) => size is { x: > 0, y: > 0 };
 
@@ -153,15 +133,7 @@ namespace Inventories
         {
             if (!CanAddItem(item, position)) return false;
 
-            for (int i = 0; i < item.Size.y; i++)
-            {
-                for (int j = 0; j < item.Size.x; j++)
-                {
-                    var key = new Vector2Int(position.x + j, position.y + i);
-                    _itemsMap[key] = item;
-                }
-            }
-
+            WriteItemInCellData(item, position);
             OnAdded?.Invoke(item, position);
             return true;
         }
@@ -184,10 +156,8 @@ namespace Inventories
         {
             if (item == null) return false;
 
-            if (!Contains(item) && FindFreePosition(item.Size, out var freePosition))
-            {
-                return AddItem(item, freePosition);
-            }
+            if (!Contains(item) && 
+                FindFreePosition(item.Size, out var freePosition)) return AddItem(item, freePosition);
 
             return false;
         }
@@ -207,26 +177,20 @@ namespace Inventories
             {
                 for (int j = 0; j < _height; j++)
                 {
-                    var fits = true;
                     var itemPosition = new Vector2Int(j, i);
                     for (int l = 0; l < sizeY; l++)
                     {
                         for (int m = 0; m < sizeX; m++)
                         {
                             var position = new Vector2Int(itemPosition.x + m, itemPosition.y + l);
-                            if (!InRange(position) || IsOccupied(position))
-                            {
-                                fits = false;
-                                break;
-                            }
+                            if (!InRange(position) || IsOccupied(position)) goto NextCell;
                         }
                     }
 
-                    if (fits)
-                    {
-                        freePosition = itemPosition;
-                        return true;
-                    }
+                    freePosition = itemPosition;
+                    return true;
+                    
+                    NextCell: ;
                 }
             }
 
@@ -236,18 +200,8 @@ namespace Inventories
         /// <summary>
         /// Checks if a specified item exists
         /// </summary>
-        public bool Contains(in Item item)
-        {
-            if (item == null) return false;
-            
-            foreach (var itemInMap in _itemsMap)
-            {
-                if (item.Equals(itemInMap.Value)) return true;
-            }
+        public bool Contains(in Item item) => item != null && _itemsMap.ContainsKey(item);
 
-            return false;
-        }
-        
         /// <summary>
         /// Checks if a specified position is occupied
         /// </summary>
@@ -255,10 +209,10 @@ namespace Inventories
         {
             if (!InRange(position)) throw new ArgumentOutOfRangeException();
 
-            return !_itemsMap[position].Equals(EmptyItem);
+            return IsOccupied(_cells[position.x, position.y]);
         }
 
-        private bool IsOccupied(in Item item) => item != null && !item.Equals(EmptyItem);
+        private bool IsOccupied(in Item item) => item != null;
         
         public bool IsOccupied(in int x, in int y) => IsOccupied(new Vector2Int(x, y));
         
@@ -267,9 +221,9 @@ namespace Inventories
         /// </summary>
         public bool IsFree(in Vector2Int position) => !IsOccupied(position);
 
-        public bool IsFree(in int x, in int y) => IsFree(new Vector2Int(y, x));
+        public bool IsFree(in int x, in int y) => IsFree(new Vector2Int(x, y));
 
-        private bool IsFree(in Item item) => item != null && !IsOccupied(item);
+        private bool IsFree(in Item item) => !IsOccupied(item);
 
         /// <summary>
         /// Removes a specified item if exists
@@ -280,31 +234,19 @@ namespace Inventories
         {
             position = default;
             if (item == null) return false;
+            if (!_itemsMap.TryGetValue(item, out position)) return false;
             
-            var removed = false;
-            
-            for (int i = 0; i < _height; i++)
+            for (int i = position.y; i < position.y + item.Size.y; i++)
             {
-                for (int j = 0; j < _width; j++)
+                for (int j = position.x; j < position.x + item.Size.x; j++)
                 {
-                    var itemPosition = new Vector2Int(j, i);
-                    var itemInMap = _itemsMap[itemPosition];
-                    if (itemInMap.Equals(item))
-                    {
-                        if (!removed)
-                        {
-                            position = itemPosition;
-                            removed = true;
-                        }
-
-                        _itemsMap[itemPosition] = EmptyItem;
-                    }
+                    _cells[j, i] = null;
                 }
             }
 
-            if (removed) OnRemoved?.Invoke(item, position);
-
-            return removed;
+            _itemsMap.Remove(item);
+            OnRemoved?.Invoke(item, position);
+            return true;
         }
         
         /// <summary>
@@ -314,7 +256,7 @@ namespace Inventories
         {
             if (!InRange(position)) throw new IndexOutOfRangeException();
 
-            var item = _itemsMap[position];
+            var item = _cells[position.x, position.y];
             if (IsFree(item)) throw new NullReferenceException();
 
             return item;
@@ -327,7 +269,7 @@ namespace Inventories
             item = default;
             if (!InRange(position)) return false;
 
-            var itemInMap = _itemsMap[position];
+            var itemInMap = _cells[position.x, position.y];
 
             if (IsFree(itemInMap)) return false;
 
@@ -344,19 +286,21 @@ namespace Inventories
         public Vector2Int[] GetPositions(in Item item)
         {
             if (item == null) throw new NullReferenceException();
+            if (!_itemsMap.TryGetValue(item, out var pivot)) throw new KeyNotFoundException();
             
-            var positions = new List<Vector2Int>();
-            foreach (var itemPair in _itemsMap)
+            var positions = new Vector2Int[item.Size.x * item.Size.y];
+
+            var index = 0;
+            for (int i = pivot.x; i < pivot.x + item.Size.x; i++)
             {
-                if (itemPair.Value.Equals(item))
+                for (int j = pivot.y; j < pivot.y + item.Size.y; j++)
                 {
-                    positions.Add(itemPair.Key);
+                    positions[index] = new Vector2Int(i, j);
+                    index++;
                 }
             }
-
-            if (positions.Count == 0) throw new KeyNotFoundException();
             
-            return positions.ToArray();
+            return positions;
         }
         
         public bool TryGetPositions(in Item item, out Vector2Int[] positions)
@@ -373,25 +317,10 @@ namespace Inventories
         /// </summary>
         public void Clear()
         {
-            var cleared = false;
-            for (int i = 0; i < _height; i++)
-            {
-                for (int j = 0; j < _width; j++)
-                {
-                    var key = new Vector2Int(j, i);
-                    var item = _itemsMap[key];
-                    if (IsOccupied(item))
-                    {
-                        cleared = true;
-                        _itemsMap[key] = EmptyItem;
-                    }
-                }
-            }
-
-            if (cleared)
-            {
-                OnCleared?.Invoke();
-            }
+            if (_itemsMap.Keys.Count == 0) return;
+            
+            ClearItemsData();
+            OnCleared?.Invoke();
         }
         
         /// <summary>
@@ -399,20 +328,20 @@ namespace Inventories
         /// </summary>
         public int GetItemCount(string name)
         {
+            var item = _itemsMap.Keys.FirstOrDefault(x => x.Name == name);
+            if (item == null) return 0;
+            
             var itemCells = 0;
-            int? itemArea = default;
-            foreach (var item in this)
+            int itemArea = item.Size.x * item.Size.y;
+            foreach (var itemInMap in this)
             {
-                if (item.Name == name)
+                if (itemInMap.Name == name)
                 {
                     itemCells++;
-                    itemArea ??= item.Size.x * item.Size.y;
                 }
             }
-        
-            if (!itemArea.HasValue || itemArea.Value == 0) return 0;
-        
-            return itemCells / itemArea.Value;
+            
+            return itemCells / itemArea;
         }
         
         /// <summary>
@@ -421,16 +350,16 @@ namespace Inventories
         public bool MoveItem(in Item item, in Vector2Int newPosition)
         {
             if (item == null) throw new ArgumentNullException();
-            if (!InRange(newPosition) || !Contains(item)) return false;
+            if (!InRange(newPosition) || !_itemsMap.TryGetValue(item, out _)) return false;
 
-            for (int i = 0; i < item.Size.y; i++)
+            for (int i = newPosition.y; i < newPosition.y + item.Size.y; i++)
             {
-                for (int j = 0; j < item.Size.x; j++)
+                for (int j = newPosition.x; j < newPosition.x + item.Size.x; j++)
                 {
-                    var position = new Vector2Int(newPosition.x + j, newPosition.y + i);
+                    var position = new Vector2Int(j, i);
                     if (!InRange(position)) return false;
-                    var itemInMap = _itemsMap[position];
-                    if (!itemInMap.Equals(item) && IsOccupied(position)) return false;
+                    var cell = _cells[j, i];
+                    if (!item.Equals(cell) && IsOccupied(position)) return false;
                 }
             }
 
@@ -445,30 +374,14 @@ namespace Inventories
         {
             if (Count == 0) return;
 
-            List<Item> allItems = new List<Item>(this.OrderByDescending(x => x.Size.x * x.Size.y).ThenBy(x => x.Name));
-            Clear();
+            List<Item> allItems = new List<Item>(this.OrderByDescending(x => x.Size.x * x.Size.y));
+            ClearItemsData();
 
-            for (int i = 0; i < _width; i++)
+            foreach (var itemInBuffer in allItems)
             {
-                for (int j = 0; j < _height; j++)
+                if (FindFreePosition(itemInBuffer.Size, out var position))
                 {
-                    var position = new Vector2Int(j, i);
-                    Item addedItem = null;
-                    foreach (var itemInBuffer in allItems)
-                    {
-                        if (CanAddItem(itemInBuffer, position))
-                        {
-                            addedItem = itemInBuffer;
-                            break;
-                        }
-                    }
-                    
-                    if (addedItem != null)
-                    {
-                        AddItem(addedItem, position);
-                        allItems.Remove(addedItem);
-                        if (allItems.Count == 0) return;
-                    }
+                    WriteItemInCellData(itemInBuffer, position);
                 }
             }
         }
@@ -476,35 +389,35 @@ namespace Inventories
         /// <summary>
         /// Copies inventory items to a specified matrix
         /// </summary>
-        public void CopyTo(in Item[,] matrix)
+        public void CopyTo(in Item[,] matrix) => Array.Copy(_cells, matrix, matrix.Length);
+
+        public IEnumerator<Item> GetEnumerator() => _itemsMap.Keys.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        private void ClearItemsData()
         {
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int i = 0; i < _height; i++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int j = 0; j < _width; j++)
                 {
-                    var item = _itemsMap[new Vector2Int(i, j)];
-                    if (IsFree(item))
-                    {
-                        matrix[i, j] = null;
-                    }
-                    else
-                    {
-                        matrix[i, j] = item;
-                    }
+                    _cells[i, j] = null;
                 }
             }
-        }
-        
-        public IEnumerator<Item> GetEnumerator()
-        {
-            var set = new HashSet<Item> { EmptyItem };
             
-            foreach (var itemInMap in _itemsMap)
-            {
-                if (set.Add(itemInMap.Value)) yield return itemInMap.Value;
-            }
+            _itemsMap.Clear();
         }
-        
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        private void WriteItemInCellData(in Item item, in Vector2Int position)
+        {
+            for (int i = 0; i < item.Size.y; i++)
+            {
+                for (int j = 0; j < item.Size.x; j++)
+                {
+                    _cells[position.x + j, position.y + i] = item;
+                }
+            }
+            _itemsMap[item] = position;
+        }
     }
 }
