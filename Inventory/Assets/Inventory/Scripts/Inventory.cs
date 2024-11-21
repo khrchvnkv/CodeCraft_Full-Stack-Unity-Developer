@@ -362,6 +362,9 @@ namespace Inventories
                     if (!item.Equals(cell) && IsOccupied(position)) return false;
                 }
             }
+            
+            ClearItemInCellData(item);
+            WriteItemInCellData(item, newPosition);
 
             OnMoved?.Invoke(item, newPosition);
             return true;
@@ -374,10 +377,9 @@ namespace Inventories
         {
             if (Count == 0) return;
 
-            List<Item> allItems = new List<Item>(this.OrderByDescending(x => x.Size.x * x.Size.y));
-            ClearItemsData();
+            ClearCells();
 
-            foreach (var itemInBuffer in allItems)
+            foreach (var itemInBuffer in this.OrderByDescending(x => x.Size.x * x.Size.y))
             {
                 if (FindFreePosition(itemInBuffer.Size, out var position))
                 {
@@ -397,14 +399,7 @@ namespace Inventories
 
         private void ClearItemsData()
         {
-            for (int i = 0; i < _height; i++)
-            {
-                for (int j = 0; j < _width; j++)
-                {
-                    _cells[i, j] = null;
-                }
-            }
-            
+            ClearCells();
             _itemsMap.Clear();
         }
 
@@ -419,5 +414,21 @@ namespace Inventories
             }
             _itemsMap[item] = position;
         }
+
+        private void ClearItemInCellData(in Item item)
+        {
+            if (!_itemsMap.TryGetValue(item, out var position)) throw new KeyNotFoundException();
+                
+            for (int i = 0; i < item.Size.y; i++)
+            {
+                for (int j = 0; j < item.Size.x; j++)
+                {
+                    _cells[position.x + j, position.y + i] = null;
+                }
+            }
+            _itemsMap.Remove(item);
+        }
+
+        private void ClearCells() => Array.Clear(_cells, 0, _cells.Length);
     }
 }
