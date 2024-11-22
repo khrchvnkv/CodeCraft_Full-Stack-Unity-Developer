@@ -267,12 +267,12 @@ namespace Zenject
             }
         }
 
-        protected virtual void OnDespawned(TContract item)
+        protected virtual void OnDespawned(TContract coin)
         {
             // Optional
         }
 
-        protected virtual void OnSpawned(TContract item)
+        protected virtual void OnSpawned(TContract coin)
         {
             // Optional
         }

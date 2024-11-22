@@ -24,14 +24,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -65,14 +65,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -106,14 +106,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -147,14 +147,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -188,14 +188,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -229,14 +229,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -270,14 +270,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -311,14 +311,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -352,14 +352,14 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            coin.OnDespawned();
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
 

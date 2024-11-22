@@ -27,18 +27,18 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue coin)
         {
-            item.gameObject.SetActive(true);
+            coin.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.gameObject.SetActive(false);
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -68,18 +68,18 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue coin)
         {
-            item.gameObject.SetActive(true);
+            coin.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.gameObject.SetActive(false);
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -110,18 +110,18 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue coin)
         {
-            item.gameObject.SetActive(true);
+            coin.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.gameObject.SetActive(false);
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -152,18 +152,18 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue coin)
         {
-            item.gameObject.SetActive(true);
+            coin.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.gameObject.SetActive(false);
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -194,18 +194,18 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue coin)
         {
-            item.gameObject.SetActive(true);
+            coin.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.gameObject.SetActive(false);
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -236,18 +236,18 @@ namespace Zenject
             GameObject.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue coin)
         {
-            item.gameObject.SetActive(true);
+            coin.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue coin)
         {
-            item.gameObject.SetActive(false);
+            coin.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (coin.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                coin.transform.SetParent(_originalParent, false);
             }
         }
     }
