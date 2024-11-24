@@ -6,5 +6,7 @@ namespace Input
     public interface IInputAdapter
     {
         event Action<Vector2Int> DirectionChanged;
+
+        void Reset();
     }
 }

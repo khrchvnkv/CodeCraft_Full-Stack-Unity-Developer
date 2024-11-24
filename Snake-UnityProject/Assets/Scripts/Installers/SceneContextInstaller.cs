@@ -1,6 +1,10 @@
-using Controllers;
+using Controllers.Coin.Spawn;
+using Controllers.Snake.CoinCollecting;
+using Controllers.Snake.Movement;
+using Controllers.UI;
 using Input;
 using Modules;
+using Observers.Snake;
 using SnakeGame;
 using UnityEngine;
 using Zenject;
@@ -26,7 +30,8 @@ namespace Installers
             Container
                 .Bind<IDifficulty>()
                 .To<Difficulty>()
-                .AsSingle();
+                .AsSingle()
+                .WithArguments(9);
             
             Container
                 .Bind<IScore>()
@@ -38,7 +43,23 @@ namespace Installers
                 .AsSingle();
 
             Container
-                .BindInterfacesTo<SnakeController>()
+                .BindInterfacesTo<SnakeMovementController>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<SnakeDeathObserver>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<CoinsStateController>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<CoinCollectingController>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<UIController>()
                 .AsSingle();
         }
         

@@ -4,28 +4,34 @@ using Modules;
 using UnityEngine;
 using Zenject;
 
-namespace Controllers
+namespace Controllers.Snake.Movement
 {
-    public class SnakeController : ISnakeController, IInitializable, IDisposable
+    public class SnakeMovementController : ISnakeMovementController, IInitializable, IDisposable
     {
         private readonly ISnake _snake;
         private readonly IInputAdapter _inputAdapter;
+        private readonly IDifficulty _difficulty;
 
-        public SnakeController(ISnake snake, IInputAdapter inputAdapter)
+        public SnakeMovementController(ISnake snake, IInputAdapter inputAdapter, IDifficulty difficulty)
         {
             _snake = snake;
             _inputAdapter = inputAdapter;
+            _difficulty = difficulty;
         }
 
         void IInitializable.Initialize()
         {
             _inputAdapter.DirectionChanged += ChangeDirection;
+            _difficulty.OnStateChanged += UpdateSpeed;
         }
-        
+
         void IDisposable.Dispose()
         {
             _inputAdapter.DirectionChanged -= ChangeDirection;
+            _difficulty.OnStateChanged -= UpdateSpeed;
         }
+
+        private void UpdateSpeed() => _snake.SetSpeed(_difficulty.Current);
 
         private void ChangeDirection(Vector2Int direction) => 
             _snake.Turn(GetSnakeDirection(direction));

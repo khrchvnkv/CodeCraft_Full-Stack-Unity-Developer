@@ -1,5 +1,5 @@
-using Collision.Contracts;
-using Factory.Coin;
+using Controllers.Snake.CoinCollecting;
+using Factory;
 using Modules;
 using Zenject;
 

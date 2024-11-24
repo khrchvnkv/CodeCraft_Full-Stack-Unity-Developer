@@ -6,9 +6,13 @@ namespace Input
 {
     public class StandaloneInputAdapter : IInputAdapter, ITickable
     {
+        private static readonly Vector2Int DefaultInputDirection = Vector2Int.zero;
+        
         public event Action<Vector2Int> DirectionChanged;
 
-        private Vector2Int _direction = Vector2Int.zero;
+        private Vector2Int _direction = DefaultInputDirection;
+
+        void IInputAdapter.Reset() => _direction = DefaultInputDirection;
 
         void ITickable.Tick()
         {
