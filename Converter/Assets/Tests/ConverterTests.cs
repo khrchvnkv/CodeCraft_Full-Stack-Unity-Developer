@@ -17,8 +17,9 @@ namespace Homework
             int unloadingZoneAmount,
             float conversionTime)
         {
-            var converter = new Converter(loadingCapacity, unloadingCapacity, loadingZoneAmount,
+            var args = new Converter.Args(loadingCapacity, unloadingCapacity, loadingZoneAmount,
                 unloadingZoneAmount, conversionTime);
+            var converter = new Converter(args);
             
             Assert.IsNotNull(converter);
         }
@@ -42,8 +43,9 @@ namespace Homework
         {
             Assert.Catch<ArgumentOutOfRangeException>(() =>
             {
-                var converter = new Converter(loadingCapacity, unloadingCapacity, loadingZoneAmount,
+                var args = new Converter.Args(loadingCapacity, unloadingCapacity, loadingZoneAmount,
                     unloadingZoneAmount, conversionTime);
+                var converter = new Converter(args);
             });
         }
 
@@ -60,10 +62,12 @@ namespace Homework
         public void WhenAddExtraLoadingValueThenLimitItByCapacity()
         {
             var converter = CreateDefaultConverter();
+            var loadingValue = DefaultConvertCapacity * 1000;
 
-            converter.AddLoadingValue(DefaultConvertCapacity * 1000);
+            converter.AddLoadingValue(loadingValue, out var change);
             
             Assert.AreEqual(converter.LoadingValue, DefaultConvertCapacity);
+            Assert.AreEqual(change, loadingValue - DefaultConvertCapacity);
         }
         
         [Test]
@@ -100,7 +104,7 @@ namespace Homework
         public void WhenStartConvertCycleThenLoadingCountDecreasing()
         {
             var converter = CreateDefaultConverter();
-            converter.AddLoadingValue(DefaultConvertCapacity);
+            converter.AddLoadingValue(DefaultConvertCapacity, out _);
             
             converter.Enable();
 
@@ -111,7 +115,7 @@ namespace Homework
         public void WhenConvertCycleThenUnloadingCountIncreasing()
         {
             var converter = CreateDefaultConverter();
-            converter.AddLoadingValue(DefaultConvertCapacity);
+            converter.AddLoadingValue(DefaultConvertCapacity, out _);
             
             converter.Enable();
             converter.Update(DefaultConvertCycleTime);
@@ -123,7 +127,7 @@ namespace Homework
         public void WhenBreakConvertCycleThenLoadingCountReset()
         {
             var converter = CreateDefaultConverter();
-            converter.AddLoadingValue(DefaultConvertCapacity);
+            converter.AddLoadingValue(DefaultConvertCapacity, out _);
             
             converter.Enable();
             converter.Update(DefaultConvertCycleTime / 2);
@@ -142,7 +146,7 @@ namespace Homework
 
             Assert.Catch<ArgumentOutOfRangeException>(() =>
             {
-                converter.AddLoadingValue(-1);
+                converter.AddLoadingValue(-1, out _);
             });
         }
         
@@ -194,7 +198,7 @@ namespace Homework
         public void WhenConvertCycleThenAllSpacesChanging()
         {
             var converter = CreateDefaultConverter();
-            converter.AddLoadingValue(DefaultConvertCapacity);
+            converter.AddLoadingValue(DefaultConvertCapacity, out _);
             int loadingValue = 0;
             int unloadingValue = 0;
             converter.OnConverted += () =>
@@ -214,7 +218,7 @@ namespace Homework
         public void WhenConvertAllAvailableLoadingValueThenPauseConverting()
         {
             var converter = CreateDefaultConverter();
-            converter.AddLoadingValue(DefaultConvertCapacity);
+            converter.AddLoadingValue(DefaultConvertCapacity, out _);
             int convertCount = 0;
             converter.OnConverted += () => convertCount++;
 
@@ -231,21 +235,26 @@ namespace Homework
             Assert.IsTrue(converter.IsEnabled);
         }
 
-        private Converter CreateDefaultConverter() => 
-            new(DefaultConvertCapacity, 
-                DefaultConvertCapacity, 
-                3, 
-                2, 
-                DefaultConvertCycleTime);
-        
-        private Converter CreateFullConverter()
+        private Converter CreateDefaultConverter()
         {
-            var converter = new Converter(DefaultConvertCapacity,
+            var args = new Converter.Args(DefaultConvertCapacity,
                 DefaultConvertCapacity,
                 3,
                 2,
                 DefaultConvertCycleTime);
-            converter.AddLoadingValue(DefaultConvertCapacity);
+            return new(args);
+        }
+
+        private Converter CreateFullConverter()
+        {
+            var args = new Converter.Args(DefaultConvertCapacity,
+                DefaultConvertCapacity,
+                3,
+                2,
+                DefaultConvertCycleTime);
+            var converter = new Converter(args);
+            
+            converter.AddLoadingValue(DefaultConvertCapacity, out _);
             converter.AddUnloadingValue(DefaultConvertCapacity);
             return converter;
         }

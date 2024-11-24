@@ -55,7 +55,7 @@ namespace Homework
                 {
                     if (Converting)
                     {
-                        AddLoadingValue(_fromResourcesAmount);
+                        AddLoadingValue(_fromResourcesAmount, out _);
                         Converting = false;
                     }
                 }
@@ -84,24 +84,42 @@ namespace Homework
 
         public event Action OnConverted;
 
-        public Converter(
-            in int loadingCapacity,
-            in int unloadingCapacity,
-            in int fromResourcesAmount,
-            in int toResourcesAmount,
-            in float conversionTime)
+        public struct Args
         {
-            if (loadingCapacity <= 0) throw new ArgumentOutOfRangeException($"{nameof(loadingCapacity)} must be greater zero");
-            if (unloadingCapacity <= 0) throw new ArgumentOutOfRangeException($"{nameof(unloadingCapacity)} must be greater zero");
-            if (fromResourcesAmount <= 0) throw new ArgumentOutOfRangeException($"{nameof(fromResourcesAmount)} must be greater zero");
-            if (toResourcesAmount <= 0) throw new ArgumentOutOfRangeException($"{nameof(toResourcesAmount)} must be greater zero");
-            if (conversionTime <= 0.0f) throw new ArgumentOutOfRangeException($"{nameof(conversionTime)} must be greater zero");
-            
-            _loadingCapacity = loadingCapacity;
-            _unloadingCapacity = unloadingCapacity;
-            _fromResourcesAmount = fromResourcesAmount;
-            _toResourcesAmount = toResourcesAmount;
-            _conversionTime = conversionTime;
+            public readonly int LoadingCapacity;
+            public readonly int UnloadingCapacity;
+            public readonly int FromResourcesAmount;
+            public readonly int ToResourcesAmount;
+            public readonly float ConversionTime;
+
+            public Args(
+                in int loadingCapacity, 
+                in int unloadingCapacity, 
+                in int fromResourcesAmount, 
+                in int toResourcesAmount, 
+                in float conversionTime)
+            {
+                if (loadingCapacity <= 0) throw new ArgumentOutOfRangeException($"{nameof(loadingCapacity)} must be greater zero");
+                if (unloadingCapacity <= 0) throw new ArgumentOutOfRangeException($"{nameof(unloadingCapacity)} must be greater zero");
+                if (fromResourcesAmount <= 0) throw new ArgumentOutOfRangeException($"{nameof(fromResourcesAmount)} must be greater zero");
+                if (toResourcesAmount <= 0) throw new ArgumentOutOfRangeException($"{nameof(toResourcesAmount)} must be greater zero");
+                if (conversionTime <= 0.0f) throw new ArgumentOutOfRangeException($"{nameof(conversionTime)} must be greater zero");
+                
+                LoadingCapacity = loadingCapacity;
+                UnloadingCapacity = unloadingCapacity;
+                FromResourcesAmount = fromResourcesAmount;
+                ToResourcesAmount = toResourcesAmount;
+                ConversionTime = conversionTime;
+            }
+        }
+        
+        public Converter(Args args)
+        {
+            _loadingCapacity = args.LoadingCapacity;
+            _unloadingCapacity = args.UnloadingCapacity;
+            _fromResourcesAmount = args.FromResourcesAmount;
+            _toResourcesAmount = args.ToResourcesAmount;
+            _conversionTime = args.ConversionTime;
 
             LoadingValue = 0;
             UnloadingValue = 0;
@@ -119,11 +137,21 @@ namespace Homework
 
         public void Disable() => IsEnabled = false;
 
-        public void AddLoadingValue(in int value)
+        public void AddLoadingValue(in int value, out int change)
         {
+            change = default;
             if (value < 0) throw new ArgumentOutOfRangeException();
-            
-            LoadingValue = Math.Min(_loadingCapacity, LoadingValue + value);
+
+            var maxAddingValue = _loadingCapacity - LoadingValue;
+            if (value > maxAddingValue)
+            {
+                LoadingValue = _loadingCapacity;
+                change = value - maxAddingValue;
+            }
+            else
+            {
+                LoadingValue += value;
+            }
         }
         
         internal void AddUnloadingValue(in int value)
