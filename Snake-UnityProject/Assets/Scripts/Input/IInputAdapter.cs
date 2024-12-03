@@ -1,12 +1,13 @@
 using System;
-using UnityEngine;
+using Modules;
 
 namespace Input
 {
     public interface IInputAdapter
     {
-        event Action<Vector2Int> DirectionChanged;
+        event Action<SnakeDirection> DirectionChanged;
 
-        void Reset();
+        void Enable();
+        void Disable();
     }
 }

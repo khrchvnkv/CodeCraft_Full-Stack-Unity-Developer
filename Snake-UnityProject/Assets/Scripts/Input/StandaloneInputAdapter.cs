@@ -1,4 +1,5 @@
 using System;
+using Modules;
 using UnityEngine;
 using Zenject;
 
@@ -6,37 +7,42 @@ namespace Input
 {
     public class StandaloneInputAdapter : IInputAdapter, ITickable
     {
-        private static readonly Vector2Int DefaultInputDirection = Vector2Int.zero;
-        
-        public event Action<Vector2Int> DirectionChanged;
+        private const SnakeDirection DefaultInputDirection = SnakeDirection.UP;
 
-        private Vector2Int _direction = DefaultInputDirection;
+        public event Action<SnakeDirection> DirectionChanged;
 
-        void IInputAdapter.Reset() => _direction = DefaultInputDirection;
+        private SnakeDirection _direction = DefaultInputDirection;
+        private bool _isEnabled;
+
+        void IInputAdapter.Enable() => _isEnabled = true;
+
+        void IInputAdapter.Disable() => _isEnabled = false;
 
         void ITickable.Tick()
         {
+            if (!_isEnabled) return;
+            
             if (UnityEngine.Input.GetKeyDown(KeyCode.W))
             {
-                ChangeDirection(Vector2Int.up);
+                ChangeDirection(SnakeDirection.UP);
             } 
             else if (UnityEngine.Input.GetKeyDown(KeyCode.S))
             {
-                ChangeDirection(Vector2Int.down);
+                ChangeDirection(SnakeDirection.DOWN);
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.A))
             {
-                ChangeDirection(Vector2Int.left);
+                ChangeDirection(SnakeDirection.LEFT);
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.D))
             {
-                ChangeDirection(Vector2Int.right);
+                ChangeDirection(SnakeDirection.RIGHT);
             }
         }
 
-        private void ChangeDirection(in Vector2Int direction)
+        private void ChangeDirection(in SnakeDirection direction)
         {
-            if (direction == _direction) return;
+             if (direction == _direction) return;
             
             _direction = direction;
             DirectionChanged?.Invoke(_direction);
