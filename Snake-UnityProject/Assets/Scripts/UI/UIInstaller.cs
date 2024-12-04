@@ -8,10 +8,6 @@ namespace UI
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesTo<ScreenManager>()
-                .AsSingle();
-            
-            Container
                 .BindInterfacesTo<UIController>()
                 .AsSingle();
             

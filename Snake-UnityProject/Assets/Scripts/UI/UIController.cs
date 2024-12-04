@@ -1,21 +1,22 @@
 using System;
 using Modules;
+using SnakeGame;
 using Zenject;
 
 namespace UI
 {
     public class UIController : IInitializable, IDisposable
     {
-        private readonly IScreenManager _screenManager;
+        private readonly IGameUI _gameUI;
         private readonly IScore _score;
         private readonly IDifficulty _difficulty;
 
         public UIController(
-            IScreenManager screenManager, 
+            IGameUI gameUI, 
             IScore score, 
             IDifficulty difficulty)
         {
-            _screenManager = screenManager;
+            _gameUI = gameUI;
             _score = score;
             _difficulty = difficulty;
         }
@@ -35,8 +36,8 @@ namespace UI
             _difficulty.OnStateChanged -= UpdateDifficulty;
         }
 
-        private void UpdateScore(int score) => _screenManager.UpdateScore(score);
+        private void UpdateScore(int score) => _gameUI.SetScore(score.ToString());
 
-        private void UpdateDifficulty() => _screenManager.UpdateDifficulty(_difficulty.Current, _difficulty.Max);
+        private void UpdateDifficulty() => _gameUI.SetDifficulty(_difficulty.Current, _difficulty.Max);
     }
 }

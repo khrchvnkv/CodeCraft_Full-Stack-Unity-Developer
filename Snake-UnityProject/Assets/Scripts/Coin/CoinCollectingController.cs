@@ -1,5 +1,4 @@
 using System;
-using GameCycle;
 using Modules;
 using UnityEngine;
 using Zenject;
@@ -11,23 +10,15 @@ namespace Coin
         private readonly ICoinManager _coinManager;
         private readonly ISnake _snake;
         private readonly IScore _score;
-        private readonly IDifficulty _difficulty;
-        private readonly IGameCycle _gameCycle;
 
-        private bool IsGameCompleted => _coinManager.AllCoinsCollected() && !_difficulty.Next(out _);
-        
         public CoinCollectingController(
             ICoinManager coinManager, 
             ISnake snake, 
-            IScore score, 
-            IDifficulty difficulty, 
-            IGameCycle gameCycle)
+            IScore score)
         {
             _coinManager = coinManager;
             _snake = snake;
             _score = score;
-            _difficulty = difficulty;
-            _gameCycle = gameCycle;
         }
 
         void IInitializable.Initialize() => _snake.OnMoved += CheckCollection;
@@ -36,22 +27,10 @@ namespace Coin
 
         private void CheckCollection(Vector2Int position)
         {
-            if (_coinManager.IsCoinCollided(position, out var coin))
+            if (_coinManager.TryTakeCoin(position, out var score, out var bones))
             {
-                CollectCoin(coin);
-            }
-        }
-
-        private void CollectCoin(in Modules.Coin coin)
-        {
-            _score.Add(coin.Score);
-            _snake.Expand(coin.Bones);
-            _coinManager.Remove(coin);
-
-            if (IsGameCompleted)
-            {
-                _snake.SetActive(false);
-                _gameCycle.CompleteGame();
+                _score.Add(score);
+                _snake.Expand(bones);
             }
         }
     }

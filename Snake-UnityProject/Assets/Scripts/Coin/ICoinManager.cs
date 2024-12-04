@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 
 namespace Coin
 {
     public interface ICoinManager
     {
+        event Action OnAllCoinsCollected;
+
         void SpawnCoins(in int count);
-        void Remove(in Modules.Coin coin);
-        bool IsCoinCollided(Vector2Int position, out Modules.Coin coin);
-        bool AllCoinsCollected();
+        bool TryTakeCoin(Vector2Int position, out int score, out int bones);
     }
 }

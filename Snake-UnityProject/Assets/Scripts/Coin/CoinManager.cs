@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Modules;
 using SnakeGame;
@@ -10,6 +11,8 @@ namespace Coin
         private readonly Dictionary<Vector2Int, Modules.Coin> _createdCoins = new();
         private readonly CoinPool _coinPool;
         private readonly IWorldBounds _worldBounds;
+
+        public event Action OnAllCoinsCollected;
 
         public CoinManager(
             CoinPool coinPool, 
@@ -27,22 +30,39 @@ namespace Coin
             }
         }
 
-        void ICoinManager.Remove(in Modules.Coin coin)
+        bool ICoinManager.TryTakeCoin(Vector2Int position, out int score, out int bones)
         {
-            _createdCoins.Remove(coin.Position);
-            _coinPool.Despawn(coin);
+            score = default;
+            bones = default;
+
+            if (_createdCoins.TryGetValue(position, out var coin))
+            {
+                score = coin.Score;
+                bones = coin.Bones;
+                Remove(coin);
+                
+                return true;
+            }
+
+            return false;
         }
-
-        bool ICoinManager.IsCoinCollided(Vector2Int position, out Modules.Coin coin) =>
-            _createdCoins.TryGetValue(position, out coin);
-
-        bool ICoinManager.AllCoinsCollected() => _createdCoins.Count == 0;
-
+        
         private ICoin Create(in Vector2Int position)
         {
             var coin = _coinPool.Spawn(position);
             _createdCoins.Add(position, coin);
             return coin;
+        }
+
+        private void Remove(in Modules.Coin coin)
+        {
+            _createdCoins.Remove(coin.Position);
+            _coinPool.Despawn(coin);
+
+            if (_createdCoins.Count == 0)
+            {
+                OnAllCoinsCollected?.Invoke();
+            }
         }
     }
 }

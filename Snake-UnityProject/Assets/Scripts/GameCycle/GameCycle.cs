@@ -1,27 +1,50 @@
+using System;
+using Coin;
 using Input;
 using Modules;
-using UI;
+using SnakeGame;
 using Zenject;
 
 namespace GameCycle
 {
-    public class GameCycle : IGameCycle, IInitializable
+    public class GameCycle : IGameCycle, IInitializable, IDisposable
     {
         private readonly IInputAdapter _inputAdapter;
-        private readonly IScreenManager _screenManager;
+        private readonly IGameUI _gameUI;
         private readonly IDifficulty _difficulty;
+        private readonly ICoinManager _coinManager;
 
         public GameCycle(
             IInputAdapter inputAdapter, 
-            IScreenManager screenManager, 
-            IDifficulty difficulty)
+            IGameUI gameUI, 
+            IDifficulty difficulty,
+            ICoinManager coinManager)
         {
             _inputAdapter = inputAdapter;
-            _screenManager = screenManager;
+            _gameUI = gameUI;
             _difficulty = difficulty;
+            _coinManager = coinManager;
         }
 
-        void IInitializable.Initialize() => StartGame();
+        void IInitializable.Initialize()
+        {
+            StartGame();
+
+            _coinManager.OnAllCoinsCollected += StartNewStageOrCompleteGame;
+        }
+
+        void IDisposable.Dispose()
+        {
+            _coinManager.OnAllCoinsCollected -= StartNewStageOrCompleteGame;
+        }
+
+        private void StartNewStageOrCompleteGame()
+        {
+            if (!_difficulty.Next(out _))
+            {
+                CompleteGame();
+            }
+        }
 
         public void StartGame()
         {
@@ -29,16 +52,16 @@ namespace GameCycle
             _difficulty.Next(out _);
         }
 
-        void IGameCycle.CompleteGame()
+        public void CompleteGame()
         {
             _inputAdapter.Disable();
-            _screenManager.ShowGameCompleteScreen();
+            _gameUI.GameOver(true);
         }
 
         void IGameCycle.LossGame()
         {
             _inputAdapter.Disable();
-            _screenManager.ShowGameLossScreen();
+            _gameUI.GameOver(false);
         }
     }
 }
