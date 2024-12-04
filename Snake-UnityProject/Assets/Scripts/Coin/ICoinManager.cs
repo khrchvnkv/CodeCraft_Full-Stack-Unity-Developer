@@ -8,6 +8,7 @@ namespace Coin
         event Action OnAllCoinsCollected;
 
         void SpawnCoins(in int count);
-        bool TryTakeCoin(Vector2Int position, out int score, out int bones);
+        bool CanCollectCoin(Vector2Int position, out int score, out int bones);
+        void RemoveCoinAtPosition(in Vector2Int position);
     }
 }

@@ -30,7 +30,7 @@ namespace Coin
             }
         }
 
-        bool ICoinManager.TryTakeCoin(Vector2Int position, out int score, out int bones)
+        bool ICoinManager.CanCollectCoin(Vector2Int position, out int score, out int bones)
         {
             score = default;
             bones = default;
@@ -39,12 +39,23 @@ namespace Coin
             {
                 score = coin.Score;
                 bones = coin.Bones;
-                Remove(coin);
                 
                 return true;
             }
 
             return false;
+        }
+
+        void ICoinManager.RemoveCoinAtPosition(in Vector2Int position)
+        {
+            if (_createdCoins.TryGetValue(position, out var coin))
+            {
+                Remove(coin);
+            }
+            else
+            {
+                Debug.LogError($"No coins at position {position}");
+            }
         }
         
         private ICoin Create(in Vector2Int position)

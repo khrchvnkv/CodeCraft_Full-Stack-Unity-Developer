@@ -27,10 +27,11 @@ namespace Coin
 
         private void CheckCollection(Vector2Int position)
         {
-            if (_coinManager.TryTakeCoin(position, out var score, out var bones))
+            if (_coinManager.CanCollectCoin(position, out var score, out var bones))
             {
                 _score.Add(score);
                 _snake.Expand(bones);
+                _coinManager.RemoveCoinAtPosition(position);
             }
         }
     }
