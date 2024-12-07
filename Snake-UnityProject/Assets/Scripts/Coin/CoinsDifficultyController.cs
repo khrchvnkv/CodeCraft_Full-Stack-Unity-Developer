@@ -23,7 +23,7 @@ namespace Coin
 
         private void SpawnCoins()
         {
-            var count = _difficulty.Current + 1;
+            var count = _difficulty.Current;
             _coinManager.SpawnCoins(count);
         }
     }

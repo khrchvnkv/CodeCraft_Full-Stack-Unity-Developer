@@ -10,6 +10,10 @@ namespace Difficulty
                 .BindInterfacesTo<Modules.Difficulty>()
                 .AsSingle()
                 .WithArguments(9);
+
+            Container
+                .BindInterfacesTo<DifficultyChangingController>()
+                .AsSingle();
         }
     }
 }
