@@ -13,7 +13,7 @@ namespace Game.Views
         [SerializeField] private GameObject _lockGameObject;
         [SerializeField] private GameObject _priceContainer;
         [SerializeField] private TMP_Text _priceText;
-        [SerializeField] private GameObject _readyIncomeContainer;
+        [SerializeField] private RectTransform _readyIncomeRect;
         [SerializeField] private TimerProgressBar _incomeTimer;
         [SerializeField] private SmartButton _planetButton;
 
@@ -28,6 +28,8 @@ namespace Game.Views
             add => _planetButton.OnHold += value;
             remove => _planetButton.OnHold -= value;
         }
+
+        public Vector2 GetIncomeIconPosition() => _readyIncomeRect.position;
         
         public void SetIcon(in Sprite sprite) => _icon.sprite = sprite;
         
@@ -39,7 +41,7 @@ namespace Game.Views
 
         public void SetPriceText(in string text) => _priceText.text = text;
 
-        public void SetReadyIncomeActivity(in bool isActive) => _readyIncomeContainer.SetActive(isActive);
+        public void SetReadyIncomeActivity(in bool isActive) => _readyIncomeRect.gameObject.SetActive(isActive);
        
         public void SetIncomeTimerActivity(in bool isActive) => _incomeTimer.SetActive(isActive);
 

@@ -20,19 +20,27 @@ namespace Game.Presenters
 
         void IInitializable.Initialize()
         {
-            _view.SetMoneyText(_moneyStorage.Money.ToString());
+            _view.SetMoneyText(ConvertMoneyText(_moneyStorage.Money));
             
+            _moneyStorage.OnMoneySpent += UpdateMoney;
+            _moneyStorage.OnMoneyEarned += UpdateMoney;
             _moneyStorage.OnMoneyChanged += UpdateMoney;
         }
 
         void IDisposable.Dispose()
         {
+            _moneyStorage.OnMoneySpent -= UpdateMoney;
+            _moneyStorage.OnMoneyEarned -= UpdateMoney;
             _moneyStorage.OnMoneyChanged -= UpdateMoney;
         }
+
+        public void LockChanging() => _view.LockChanging();
         
-        private void UpdateMoney(int newvalue, int prevvalue)
-        {
-            _view.SetMoneyText(newvalue.ToString());
-        }
+        public void UpdateMoneyWithAnimation(int startValue, int endValue) =>
+            _view.ChangeMoneyWithAnimation(startValue, endValue, ConvertMoneyText);
+
+        private void UpdateMoney(int newvalue, int prevvalue) => _view.SetMoneyText(ConvertMoneyText(newvalue));
+
+        private string ConvertMoneyText(int value) => value.ToString();
     }
 }

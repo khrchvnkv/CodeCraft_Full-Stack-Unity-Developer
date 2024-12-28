@@ -5,13 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="562bb8e2-7440-4510-8efe-fc598d32b089" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MVx-Homework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MVx-Homework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Common/CoinParticle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Prefabs/Common/CoinParticle.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Money/MoneyView.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Prefabs/Money/MoneyView.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Planets/PlanetPopup.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Prefabs/Planets/PlanetPopup.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Planets/PlanetView.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Prefabs/Planets/PlanetView.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Game/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scenes/MainScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Gameplay/GameplayInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Gameplay/GameplayInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PresentersInstallers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PresentersInstallers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Gameplay/Money/MoneyInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Gameplay/Money/MoneyInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/MoneyPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/MoneyPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPopupPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPopupPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Views/MoneyView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Views/MoneyView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Views/PlanetView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Views/PlanetView.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Views/ViewsInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Views/ViewsInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Settings/GameplayInstaller.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Settings/GameplayInstaller.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +30,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetsInstaller.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/606c2e0a56af495988c860a4ac613e74469200/37/812dc343/CancellationTokenSource.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2qiFsgQJjZpIh14TkEVxVAGWDV6" />
   <component name="ProjectLevelVcsManager">
@@ -97,7 +105,7 @@
       <option name="presentableId" value="Default" />
       <updated>1735137696494</updated>
       <workItem from="1735137698324" duration="2681000" />
-      <workItem from="1735214780617" duration="15003000" />
+      <workItem from="1735214780617" duration="34484000" />
     </task>
     <servers />
   </component>
@@ -113,17 +121,17 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPresenter.cs</url>
-          <line>47</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPresenter.cs" initialLine="47" containingFunctionPresentation="Method 'UpdatePrice'">
+          <url>file://$PROJECT_DIR$/Assets/Game/Scripts/Presenters/MoneyPresenter.cs</url>
+          <line>41</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/MoneyPresenter.cs" initialLine="41" containingFunctionPresentation="Method 'UpdateMoney'">
             <startOffsets>
-              <option value="1138" />
+              <option value="1286" />
             </startOffsets>
             <endOffsets>
-              <option value="1189" />
+              <option value="1332" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

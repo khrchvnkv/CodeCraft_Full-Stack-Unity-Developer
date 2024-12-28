@@ -1,6 +1,10 @@
 using System;
 using System.Linq;
+using DG.Tweening;
+using Game.Gameplay.Contracts;
 using Game.Views;
+using Game.Views.Contracts;
+using Modules.Money;
 using Modules.Planets;
 using Zenject;
 
@@ -11,19 +15,28 @@ namespace Game.Presenters
         private readonly PlanetView _planetView;
         private readonly Planet _planet;
         private readonly PlanetPopupPresenter _popupPresenter;
-        private readonly IMoneyAdapter _moneyAdapter;
+        private readonly MoneyPresenter _moneyPresenter;
+        private readonly IMoneyStorage _moneyStorage;
+        private readonly ICoinParticleFactory _particleFactory;
+        private readonly ICoinParticleTarget _particleTarget;
 
         public PlanetPresenter(
-            Planet[] planets, 
-            PlanetView view, 
+            Planet[] planets,
             PlanetPopupPresenter popupPresenter,
-            IMoneyAdapter moneyAdapter,
+            MoneyPresenter moneyPresenter,
+            IMoneyStorage moneyStorage,
+            ICoinParticleFactory particleFactory,
+            ICoinParticleTarget particleTarget,
+            PlanetView view,
             string planetName)
         {
             _planet = planets.First(x => x.Name == planetName);
-            _planetView = view;
             _popupPresenter = popupPresenter;
-            _moneyAdapter = moneyAdapter;
+            _moneyPresenter = moneyPresenter;
+            _moneyStorage = moneyStorage;
+            _particleFactory = particleFactory;
+            _particleTarget = particleTarget;
+            _planetView = view;
         }
 
         void IInitializable.Initialize()
@@ -54,6 +67,7 @@ namespace Game.Presenters
             {
                 if (_planet.IsIncomeReady)
                 {
+                    ShowCoinParticle();
                     _planet.GatherIncome();
                 }
             }
@@ -73,9 +87,9 @@ namespace Game.Presenters
 
         private void PurchasePlanet()
         {
-            if (_moneyAdapter.IsEnough(_planet.Price))
+            if (_moneyStorage.IsEnough(_planet.Price))
             {
-                _moneyAdapter.Spend(_planet.Price);
+                _moneyStorage.Spend(_planet.Price);
                 _planet.Unlock();
             }
         }
@@ -115,7 +129,7 @@ namespace Game.Presenters
             _planetView.SetReadyIncomeActivity(isReady);
             _planetView.SetIncomeTimerActivity(!isReady);
         }
-        
+
         private void UpdateIncomeTimer(float value)
         {
             const string format = "{0}m:{1}s";
@@ -126,6 +140,18 @@ namespace Game.Presenters
             var text = string.Format(format, minutes, seconds);
 
             _planetView.SetTimerValues(text, _planet.IncomeProgress);
+        }
+
+        private void ShowCoinParticle()
+        {
+            var money = _moneyStorage.Money;
+            var startValue = money;
+            var endValue = money + _planet.MinuteIncome;
+            
+            _moneyPresenter.LockChanging();
+            _particleFactory.SpawnEffect(_planetView.GetIncomeIconPosition(), _particleTarget.GetParticlePosition(), CallBack);
+
+            void CallBack() => _moneyPresenter.UpdateMoneyWithAnimation(startValue, endValue);
         }
     }
 }

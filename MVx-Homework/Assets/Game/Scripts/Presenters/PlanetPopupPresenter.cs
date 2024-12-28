@@ -73,14 +73,7 @@ namespace Game.Presenters
             UpdateUpgradeButtonInteractable();
         }
 
-        private void Upgrade()
-        {
-            if (_planet.CanUpgrade && _moneyStorage.IsEnough(_planet.Price))
-            {
-                _moneyStorage.Spend(_planet.Price);
-                _planet.Upgrade();
-            }
-        }
+        private void Upgrade() => _planet.Upgrade();
 
         private void UpdateNewLevelView(int _) => UpdateView();
 

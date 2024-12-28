@@ -6,8 +6,7 @@ namespace Game.Gameplay
     //Don't modify
     public sealed class MoneyInstaller : Installer<int, MoneyInstaller>
     {
-        [Inject]
-        private int _initialMoney;
+        [Inject] private readonly int _initialMoney;
         
         public override void InstallBindings()
         {

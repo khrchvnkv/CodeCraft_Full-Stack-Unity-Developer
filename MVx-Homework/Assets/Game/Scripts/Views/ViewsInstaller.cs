@@ -7,12 +7,12 @@ namespace Game.Views
         public override void InstallBindings()
         {
             Container
-                .Bind<PlanetPopup>()
+                .BindInterfacesAndSelfTo<PlanetPopup>()
                 .FromComponentInHierarchy()
                 .AsSingle();
             
             Container
-                .Bind<MoneyView>()
+                .BindInterfacesAndSelfTo<MoneyView>()
                 .FromComponentInHierarchy()
                 .AsSingle();
         }

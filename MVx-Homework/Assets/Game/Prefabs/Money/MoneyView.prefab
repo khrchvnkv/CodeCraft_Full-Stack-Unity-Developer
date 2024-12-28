@@ -300,3 +300,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moneyText: {fileID: 3299675748291971791}
+  _iconTransform: {fileID: 6204055655084186918}
+  _animationEase: 1
+  _animationDuration: 0.7

@@ -10,8 +10,7 @@ namespace Game.Gameplay
     )]
     public sealed class GameplayInstaller : ScriptableObjectInstaller
     {
-        [SerializeField]
-        private int _initialMoney = 300;
+        [SerializeField] private int _initialMoney = 300;
 
         public override void InstallBindings()
         {

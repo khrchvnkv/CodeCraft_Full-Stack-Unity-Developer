@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: GameplayInstaller
   m_EditorClassIdentifier: 
   _initialMoney: 100000
-  _catalog: {fileID: 11400000, guid: 24135235a5c00425d9bcca105b41c4c4, type: 2}
+  _moneyParticlePrefab: {fileID: -8214381131041614244, guid: 38d7f5045319aa547904a82ff3c91ebb, type: 3}
+  _moneyParticlePoolContainer: {fileID: 0}
