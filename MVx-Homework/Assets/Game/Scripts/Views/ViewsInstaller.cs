@@ -6,7 +6,15 @@ namespace Game.Views
     {
         public override void InstallBindings()
         {
-            //TODO:
+            Container
+                .Bind<PlanetPopup>()
+                .FromComponentInHierarchy()
+                .AsSingle();
+            
+            Container
+                .Bind<MoneyView>()
+                .FromComponentInHierarchy()
+                .AsSingle();
         }
     }
 }

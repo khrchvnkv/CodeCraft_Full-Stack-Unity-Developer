@@ -11,7 +11,13 @@ namespace Game.Presenters
     {
         public override void InstallBindings()
         {
-            //TODO:
+            Container
+                .BindInterfacesAndSelfTo<PlanetPopupPresenter>()
+                .AsSingle();
+            
+            Container
+                .BindInterfacesAndSelfTo<MoneyPresenter>()
+                .AsSingle();
         }
     }
 }
