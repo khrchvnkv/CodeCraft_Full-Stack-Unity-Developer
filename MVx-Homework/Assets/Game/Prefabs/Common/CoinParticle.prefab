@@ -89,5 +89,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 8463490587080572799}
-  _animationDuration: 0.5
-  _animationEase: 4
+  _animationDuration: 0.85
+  _animationEase: 13
