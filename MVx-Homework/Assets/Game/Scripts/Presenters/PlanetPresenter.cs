@@ -144,14 +144,12 @@ namespace Game.Presenters
 
         private void ShowCoinParticle()
         {
-            var money = _moneyStorage.Money;
-            var startValue = money;
-            var endValue = money + _planet.MinuteIncome;
+            var startValue = _moneyStorage.Money;
             
             _moneyPresenter.LockChanging();
             _particleFactory.SpawnEffect(_planetView.GetIncomeIconPosition(), _particleTarget.GetParticlePosition(), CallBack);
 
-            void CallBack() => _moneyPresenter.UpdateMoneyWithAnimation(startValue, endValue);
+            void CallBack() => _moneyPresenter.UpdateMoneyWithAnimation(startValue, _moneyStorage.Money);
         }
     }
 }
