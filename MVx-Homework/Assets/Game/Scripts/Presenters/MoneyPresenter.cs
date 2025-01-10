@@ -36,8 +36,12 @@ namespace Game.Presenters
 
         public void LockChanging() => _view.LockChanging();
         
-        public void UpdateMoneyWithAnimation(int startValue, int endValue) =>
+        public void UpdateMoneyWithAnimation(int earnings)
+        {
+            var endValue = _moneyStorage.Money;
+            var startValue = endValue - earnings;
             _view.ChangeMoneyWithAnimation(startValue, endValue, ConvertMoneyText);
+        }
 
         private void UpdateMoney(int newvalue, int prevvalue) => _view.SetMoneyText(ConvertMoneyText(newvalue));
 

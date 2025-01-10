@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.Gameplay;
 using Game.Views;
 using Modules.Planets;
@@ -47,16 +48,19 @@ namespace Game.Presenters
 
         public override void InstallBindings()
         {
+            PlanetInstaller.Install(Container, _catalog);
+
+            var planets = Container.Resolve<Planet[]>();
+            
             foreach (var planetData in _planetDatas)
             {
+                var planet = planets.First(x => x.Name == planetData.Id);
                 Container
                     .BindInterfacesAndSelfTo<PlanetPresenter>()
                     .AsCached()
-                    .WithArguments(planetData.View, planetData.Id)
+                    .WithArguments(planet, planetData.View)
                     .NonLazy();
             }
-            
-            PlanetInstaller.Install(Container, _catalog);
         }
     }
 }
