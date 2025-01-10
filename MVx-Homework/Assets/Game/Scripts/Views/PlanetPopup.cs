@@ -1,8 +1,9 @@
 using Game.Views.Components;
+using Game.Views.Contracts;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Game.Views
 {
@@ -16,36 +17,86 @@ namespace Game.Views
         [SerializeField] private Button _closeButton;
         [SerializeField] private UpgradeButton _upgradeButton;
 
-        public event UnityAction UpgradeButtonClicked
+        private IPlanetPopupPresenter _presenter;
+
+        [Inject]
+        private void Construct(IPlanetPopupPresenter presenter)
         {
-            add => _upgradeButton.OnClick += value;
-            remove => _upgradeButton.OnClick -= value;
+            _presenter = presenter;
+
+            Initialize();
         }
 
-        public event UnityAction CloseButtonClicked
+        private void Initialize()
         {
-            add => _closeButton.onClick.AddListener(value);
-            remove => _closeButton.onClick.RemoveListener(value);
+            _presenter.PopupShowed += Show;
+            Hide();
+        }
+        
+        private void OnEnable()
+        {
+            UpdateView();
+
+            _presenter.ButtonInteractableUpdated += UpdateUpgradeButtonInteractable;
+            _presenter.PlanetUpgraded += UpdateView;
+            _presenter.PlanetUnlocked += UpdateIcon;
+            _presenter.PlanetPopulationChanged += UpdatePopulationText;
+            _presenter.PlanetIncomeChanged += UpdateIncomeText;
+
+            _upgradeButton.OnClick += Upgrade;
+            _closeButton.onClick.AddListener(Hide);
         }
 
-        public void Show() => gameObject.SetActive(true);
-        
-        public void Hide() => gameObject.SetActive(false);
+        private void OnDisable()
+        {
+            _presenter.ButtonInteractableUpdated += UpdateUpgradeButtonInteractable;
+            _presenter.PlanetUpgraded += UpdateView;
+            _presenter.PlanetUnlocked += UpdateIcon;
+            _presenter.PlanetPopulationChanged += UpdatePopulationText;
+            _presenter.PlanetIncomeChanged += UpdateIncomeText;
+            
+            _upgradeButton.OnClick -= Upgrade;
+            _closeButton.onClick.RemoveListener(Hide);
+        }
 
-        public void SetTitleText(in string text) => _titleText.text = text;
-        
-        public void SetIcon(in Sprite icon) => _icon.sprite = icon;
-        
-        public void SetPopulationText(in string text) => _populationText.text = text;
-        
-        public void SetLevelText(in string text) => _levelText.text = text;
-        
-        public void SetIncomeText(in string text) => _incomeText.text = text;
+        private void OnDestroy() => _presenter.PopupShowed -= Show;
 
-        public void SetMaxUpgradeStatus(in bool isMaxLevel) => _upgradeButton.SetMaxLevel(isMaxLevel);
+        private void UpdateView()
+        {
+            UpdateTitleText();
+            UpdateIcon();
+            UpdatePopulationText();
+            UpdateLevelText();
+            UpdateIncomeText();
+            UpdateMaxUpgradeStatus();
+            UpdatePriceText();
+            UpdateUpgradeButtonInteractable();
+        }
+
+        private void Show() => gameObject.SetActive(true);
         
-        public void SetPriceText(in string text) => _upgradeButton.SetPriceText(text);
+        private void Hide()
+        {
+            _presenter.Hide();
+            gameObject.SetActive(false);
+        }
+
+        private void Upgrade() => _presenter.UpgradePlanet();
+
+        private void UpdateTitleText() => _titleText.text = _presenter.GetTitleText();
         
-        public void UpdateUpgradeButtonInteractable(in bool interactable) => _upgradeButton.SetButtonInteractable(interactable);
+        private void UpdateIcon() => _icon.sprite = _presenter.GetPlanetIcon();
+        
+        private void UpdatePopulationText() => _populationText.text = _presenter.GetPopulationText();
+        
+        private void UpdateLevelText() => _levelText.text = _presenter.GetLevelText();
+        
+        private void UpdateIncomeText() => _incomeText.text = _presenter.GetIncomeText();
+
+        private void UpdateMaxUpgradeStatus() => _upgradeButton.SetMaxLevel(_presenter.IsMaxLevelUpgrade());
+        
+        private void UpdatePriceText() => _upgradeButton.SetPriceText(_presenter.GetPriceText());
+        
+        private void UpdateUpgradeButtonInteractable() => _upgradeButton.SetButtonInteractable(_presenter.IsUpgradeButtonInteractable());
     }
 }

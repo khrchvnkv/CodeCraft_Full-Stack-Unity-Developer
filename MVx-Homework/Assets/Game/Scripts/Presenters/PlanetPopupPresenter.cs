@@ -1,22 +1,27 @@
-using Game.Views;
+using System;
+using Game.Views.Contracts;
 using Modules.Money;
 using Modules.Planets;
+using UnityEngine;
 using Zenject;
 
 namespace Game.Presenters
 {
-    public sealed class PlanetPopupPresenter : IInitializable
+    public sealed class PlanetPopupPresenter : IInitializable, IPlanetPopupPresenter
     {
-        private readonly PlanetPopup _planetPopup;
         private readonly IMoneyStorage _moneyStorage;
         
         private Planet _planet;
 
-        public PlanetPopupPresenter(
-            PlanetPopup planetPopup,
-            IMoneyStorage moneyStorage)
+        public event Action ButtonInteractableUpdated;
+        public event Action PlanetUpgraded;
+        public event Action PlanetUnlocked;
+        public event Action PlanetPopulationChanged;
+        public event Action PlanetIncomeChanged;
+        public event Action PopupShowed;
+
+        public PlanetPopupPresenter(IMoneyStorage moneyStorage)
         {
-            _planetPopup = planetPopup;
             _moneyStorage = moneyStorage;
         }
 
@@ -28,89 +33,72 @@ namespace Game.Presenters
         public void Show(in Planet planet)
         {
             _planet = planet;
-            UpdateView();
             
-            _planetPopup.UpgradeButtonClicked += Upgrade;
-            _planetPopup.CloseButtonClicked += Hide;
-            _moneyStorage.OnMoneyChanged += UpdateUpgradeButtonInteractable;
+            _moneyStorage.OnMoneyChanged += OnMoneyChanged;
 
-            _planet.OnUpgraded += UpdateNewLevelView;
-            _planet.OnUnlocked += UpdateIcon;
-            _planet.OnPopulationChanged += UpdatePopulationText;
-            _planet.OnUpgraded += UpdateLevelText;
-            _planet.OnIncomeChanged += UpdateIncomeText;
+            _planet.OnUpgraded += OnUpgraded;
+            _planet.OnUnlocked += OnUnlocked;
+            _planet.OnPopulationChanged += OnPopulationChanged;
+            _planet.OnIncomeChanged += OnIncomeChanged;
             
-            _planetPopup.Show();
+            PopupShowed?.Invoke();
         }
 
         public void Hide()
         {
-            _planetPopup.UpgradeButtonClicked -= Upgrade;
-            _planetPopup.CloseButtonClicked -= Hide;
-            _moneyStorage.OnMoneyChanged -= UpdateUpgradeButtonInteractable;
+            _moneyStorage.OnMoneyChanged -= OnMoneyChanged;
 
             if (_planet != null)
             {
-                _planet.OnUpgraded -= UpdateNewLevelView;
-                _planet.OnUnlocked -= UpdateIcon;
-                _planet.OnPopulationChanged -= UpdatePopulationText;
-                _planet.OnUpgraded -= UpdateLevelText;
-                _planet.OnIncomeChanged -= UpdateIncomeText;
+                _planet.OnUpgraded -= OnUpgraded;
+                _planet.OnUnlocked -= OnUnlocked;
+                _planet.OnPopulationChanged -= OnPopulationChanged;
+                _planet.OnIncomeChanged -= OnIncomeChanged;
             }
-
-            _planetPopup.Hide();
         }
 
-        private void UpdateView()
-        {
-            UpdateTitle();
-            UpdateIcon();
-            UpdatePopulationText(_planet.Population);
-            UpdateLevelText(_planet.Level);
-            UpdateIncomeText(_planet.MinuteIncome);
-            UpdateMaxLevelUpgrade();
-            UpdatePriceText();
-            UpdateUpgradeButtonInteractable();
-        }
+        public void UpgradePlanet() => _planet.Upgrade();
 
-        private void Upgrade() => _planet.Upgrade();
-
-        private void UpdateNewLevelView(int _) => UpdateView();
-
-        private void UpdateTitle() => _planetPopup.SetTitleText(_planet.Name);
-
-        private void UpdateIcon() => _planetPopup.SetIcon(_planet.GetIcon(_planet.IsUnlocked));
-
-        private void UpdatePopulationText(int population)
+        public Sprite GetPlanetIcon() => _planet.GetIcon(_planet.IsUnlocked); 
+        
+        public string GetTitleText() => _planet.Name;
+        
+        public string GetPopulationText()
         {
             const string format = "Population: {0}";
-            _planetPopup.SetPopulationText(string.Format(format, population));
+            return string.Format(format, _planet.Population);
         }
 
-        private void UpdateLevelText(int level)
+        public string GetLevelText()
         {
             const string format = "Level: {0}/{1}";
-            _planetPopup.SetLevelText(string.Format(format, level, _planet.MaxLevel));
+            return string.Format(format, _planet.Level, _planet.MaxLevel);
         }
 
-        private void UpdateIncomeText(int income)
+        public string GetIncomeText()
         {
             const string format = "Income: {0} / sec";
-            _planetPopup.SetIncomeText(string.Format(format, income));
+            return string.Format(format, _planet.MinuteIncome);
         }
 
-        private void UpdateMaxLevelUpgrade() => _planetPopup.SetMaxUpgradeStatus(_planet.IsMaxLevel);
+        public bool IsMaxLevelUpgrade() => _planet.IsMaxLevel;
         
-        private void UpdatePriceText()
+        public string GetPriceText()
         {
             var text = _planet.Price.ToString();
-            _planetPopup.SetPriceText(text);
+            return text;
         }
 
-        private void UpdateUpgradeButtonInteractable(int newvalue, int prevvalue) => 
-            UpdateUpgradeButtonInteractable();
+        public bool IsUpgradeButtonInteractable() => _planet.CanUpgrade;
+        
+        private void OnMoneyChanged(int _, int __) => ButtonInteractableUpdated?.Invoke();
+        
+        private void OnUpgraded(int _) => PlanetUpgraded?.Invoke();
+        
+        private void OnUnlocked() => PlanetUnlocked?.Invoke();
 
-        private void UpdateUpgradeButtonInteractable() =>
-            _planetPopup.UpdateUpgradeButtonInteractable(_planet.CanUpgrade && _moneyStorage.IsEnough(_planet.Price));
+        private void OnPopulationChanged(int _) => PlanetPopulationChanged?.Invoke();
+
+        private void OnIncomeChanged(int _) => PlanetIncomeChanged?.Invoke();
     }
 }
