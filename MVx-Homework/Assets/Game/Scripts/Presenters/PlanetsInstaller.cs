@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Gameplay;
+using Game.Gameplay.Contracts;
 using Game.Views;
+using Game.Views.Contracts;
 using Modules.Planets;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -49,18 +51,30 @@ namespace Game.Presenters
         public override void InstallBindings()
         {
             PlanetInstaller.Install(Container, _catalog);
-
-            var planets = Container.Resolve<Planet[]>();
             
             foreach (var planetData in _planetDatas)
             {
-                var planet = planets.First(x => x.Name == planetData.Id);
                 Container
                     .BindInterfacesAndSelfTo<PlanetPresenter>()
+                    .FromMethod(x => CreatePlanetPresenter(x, planetData))
                     .AsCached()
-                    .WithArguments(planet, planetData.View)
                     .NonLazy();
             }
+        }
+
+        private PlanetPresenter CreatePlanetPresenter(InjectContext context, PlanetData planetData)
+        {
+            var container = context.Container;
+            var planets = container.Resolve<Planet[]>();
+            var planet = planets.First(x => x.Name == planetData.Id);
+
+            return new PlanetPresenter(
+                container.Resolve<PlanetPopupPresenter>(),
+                container.Resolve<MoneyPresenter>(),
+                container.Resolve<ICoinParticleFactory>(),
+                container.Resolve<ICoinParticleTarget>(),
+                planet,
+                planetData.View);
         }
     }
 }
