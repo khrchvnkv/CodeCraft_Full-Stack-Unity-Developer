@@ -10,9 +10,6 @@ namespace Game.Views.Contracts
         event Action PlanetUnlocked;
         event Action PlanetPopulationChanged;
         event Action PlanetIncomeChanged;
-        event Action PopupShowed;
-        
-        void Hide();
         
         void UpgradePlanet();
 

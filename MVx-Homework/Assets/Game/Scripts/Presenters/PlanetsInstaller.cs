@@ -68,11 +68,10 @@ namespace Game.Presenters
             var planets = container.Resolve<Planet[]>();
             var planet = planets.First(x => x.Name == planetData.Id);
 
-            return new PlanetPresenter(
-                container.Resolve<PlanetPopupPresenter>(),
-                container.Resolve<MoneyPresenter>(),
+            return new PlanetPresenter(container.Resolve<MoneyPresenter>(),
                 container.Resolve<ICoinParticleFactory>(),
                 container.Resolve<ICoinParticleTarget>(),
+                container.Resolve<PlanetPopupShower>(),
                 planet,
                 planetData.View);
         }

@@ -20,20 +20,9 @@ namespace Game.Views
         private IPlanetPopupPresenter _presenter;
 
         [Inject]
-        private void Construct(IPlanetPopupPresenter presenter)
-        {
-            _presenter = presenter;
+        private void Construct(IPlanetPopupPresenter presenter) => _presenter = presenter;
 
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            _presenter.PopupShowed += Show;
-            Hide();
-        }
-        
-        private void OnEnable()
+        public void Show()
         {
             UpdateView();
 
@@ -45,22 +34,24 @@ namespace Game.Views
 
             _upgradeButton.OnClick += Upgrade;
             _closeButton.onClick.AddListener(Hide);
+            
+            gameObject.SetActive(true);
         }
 
-        private void OnDisable()
+        public void Hide()
         {
-            _presenter.ButtonInteractableUpdated += UpdateUpgradeButtonInteractable;
-            _presenter.PlanetUpgraded += UpdateView;
-            _presenter.PlanetUnlocked += UpdateIcon;
-            _presenter.PlanetPopulationChanged += UpdatePopulationText;
-            _presenter.PlanetIncomeChanged += UpdateIncomeText;
+            _presenter.ButtonInteractableUpdated -= UpdateUpgradeButtonInteractable;
+            _presenter.PlanetUpgraded -= UpdateView;
+            _presenter.PlanetUnlocked -= UpdateIcon;
+            _presenter.PlanetPopulationChanged -= UpdatePopulationText;
+            _presenter.PlanetIncomeChanged -= UpdateIncomeText;
             
             _upgradeButton.OnClick -= Upgrade;
             _closeButton.onClick.RemoveListener(Hide);
+            
+            gameObject.SetActive(false);
         }
-
-        private void OnDestroy() => _presenter.PopupShowed -= Show;
-
+        
         private void UpdateView()
         {
             UpdateTitleText();
@@ -71,15 +62,7 @@ namespace Game.Views
             UpdateMaxUpgradeStatus();
             UpdatePriceText();
             UpdateUpgradeButtonInteractable();
-        }
-
-        private void Show() => gameObject.SetActive(true);
-        
-        private void Hide()
-        {
-            _presenter.Hide();
-            gameObject.SetActive(false);
-        }
+        } 
 
         private void Upgrade() => _presenter.UpgradePlanet();
 

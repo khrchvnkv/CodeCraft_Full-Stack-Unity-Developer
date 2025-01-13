@@ -1,10 +1,7 @@
 using System;
-using System.Linq;
-using DG.Tweening;
 using Game.Gameplay.Contracts;
 using Game.Views;
 using Game.Views.Contracts;
-using Modules.Money;
 using Modules.Planets;
 using Zenject;
 
@@ -14,25 +11,24 @@ namespace Game.Presenters
     {
         private readonly PlanetView _planetView;
         private readonly Planet _planet;
-        private readonly PlanetPopupPresenter _popupPresenter;
         private readonly MoneyPresenter _moneyPresenter;
         private readonly ICoinParticleFactory _particleFactory;
         private readonly ICoinParticleTarget _particleTarget;
+        private readonly PlanetPopupShower _popupShower;
 
-        public PlanetPresenter(
-            PlanetPopupPresenter popupPresenter,
-            MoneyPresenter moneyPresenter,
+        public PlanetPresenter(MoneyPresenter moneyPresenter,
             ICoinParticleFactory particleFactory,
             ICoinParticleTarget particleTarget,
+            PlanetPopupShower popupShower,
             Planet planet,
             PlanetView view)
         {
             _planet = planet;
-            _popupPresenter = popupPresenter;
             _moneyPresenter = moneyPresenter;
             _particleFactory = particleFactory;
             _particleTarget = particleTarget;
             _planetView = view;
+            _popupShower = popupShower;
         }
 
         void IInitializable.Initialize()
@@ -79,7 +75,7 @@ namespace Game.Presenters
         {
             if (_planet.IsUnlocked)
             {
-                _popupPresenter.Show(_planet);
+                _popupShower.Show(_planet);
             }
         }
 

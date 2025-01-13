@@ -12,6 +12,10 @@ namespace Game.Presenters
         public override void InstallBindings()
         {
             Container
+                .BindInterfacesAndSelfTo<PlanetPopupShower>()
+                .AsSingle();
+            
+            Container
                 .BindInterfacesAndSelfTo<PlanetPopupPresenter>()
                 .AsSingle();
             

@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Game.Presenters
 {
-    public sealed class PlanetPopupPresenter : IInitializable, IPlanetPopupPresenter
+    public sealed class PlanetPopupPresenter : IPlanetPopupPresenter, IInitializable, IDisposable
     {
         private readonly IMoneyStorage _moneyStorage;
         
@@ -18,7 +18,6 @@ namespace Game.Presenters
         public event Action PlanetUnlocked;
         public event Action PlanetPopulationChanged;
         public event Action PlanetIncomeChanged;
-        public event Action PopupShowed;
 
         public PlanetPopupPresenter(IMoneyStorage moneyStorage)
         {
@@ -27,27 +26,36 @@ namespace Game.Presenters
 
         void IInitializable.Initialize()
         {
-            Hide();
-        }
-
-        public void Show(in Planet planet)
-        {
-            _planet = planet;
-            
             _moneyStorage.OnMoneyChanged += OnMoneyChanged;
-
-            _planet.OnUpgraded += OnUpgraded;
-            _planet.OnUnlocked += OnUnlocked;
-            _planet.OnPopulationChanged += OnPopulationChanged;
-            _planet.OnIncomeChanged += OnIncomeChanged;
-            
-            PopupShowed?.Invoke();
         }
-
-        public void Hide()
+        
+        public void Dispose()
         {
             _moneyStorage.OnMoneyChanged -= OnMoneyChanged;
 
+            UnsubscribePlanet();
+        }
+
+        public void SetPlanet(in Planet planet)
+        {
+            UnsubscribePlanet();
+            _planet = planet;
+            SubscribePlanet();
+        }
+
+        private void SubscribePlanet()
+        {
+            if (_planet != null)
+            {
+                _planet.OnUpgraded += OnUpgraded;
+                _planet.OnUnlocked += OnUnlocked;
+                _planet.OnPopulationChanged += OnPopulationChanged;
+                _planet.OnIncomeChanged += OnIncomeChanged;
+            }
+        }
+        
+        private void UnsubscribePlanet()
+        {
             if (_planet != null)
             {
                 _planet.OnUpgraded -= OnUpgraded;
