@@ -2,7 +2,7 @@ using Modules.Entities;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Gameplay
+namespace Game.Scripts.Gameplay
 {
     //Don't modify
     [CreateAssetMenu(

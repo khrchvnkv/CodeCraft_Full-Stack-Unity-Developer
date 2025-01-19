@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Simple_Server
-build_property.ProjectDir = /Users/starkre/Desktop/Simple Server/Simple Server/
+build_property.ProjectDir = /Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "orexVc6VIlMCGTj0dPoCwv/qD/dTIJPJt2MAFkfRKISsHjbovnpkQdskQnSZSvDqSnOPys62XC6SHPVOTkZgXA==",
+  "dgSpecHash": "aYBulb4Syrk=",
   "success": true,
-  "projectFilePath": "/Users/starkre/Desktop/Simple Server/Simple Server/Simple Server.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/Simple Server.csproj",
+  "expectedPackageFiles": [
+    "/Users/deniskharchevnikov/.nuget/packages/microsoft.netcore.app.ref/7.0.20/microsoft.netcore.app.ref.7.0.20.nupkg.sha512",
+    "/Users/deniskharchevnikov/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.20/microsoft.aspnetcore.app.ref.7.0.20.nupkg.sha512",
+    "/Users/deniskharchevnikov/.nuget/packages/microsoft.netcore.app.host.osx-arm64/7.0.20/microsoft.netcore.app.host.osx-arm64.7.0.20.nupkg.sha512"
+  ],
   "logs": []
 }

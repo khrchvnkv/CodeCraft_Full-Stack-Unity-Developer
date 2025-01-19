@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Gameplay
+namespace Game.Scripts.UI
 {
     //Don't modify
     public interface IControlsPresenter

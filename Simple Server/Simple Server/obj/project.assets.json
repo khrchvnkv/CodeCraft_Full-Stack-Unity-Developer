@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "/Users/starkre/.nuget/packages/": {}
+    "/Users/deniskharchevnikov/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/starkre/Desktop/Simple Server/Simple Server/Simple Server.csproj",
+      "projectUniqueName": "/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/Simple Server.csproj",
       "projectName": "Simple Server",
-      "projectPath": "/Users/starkre/Desktop/Simple Server/Simple Server/Simple Server.csproj",
-      "packagesPath": "/Users/starkre/.nuget/packages/",
-      "outputPath": "/Users/starkre/Desktop/Simple Server/Simple Server/obj/",
+      "projectPath": "/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/Simple Server.csproj",
+      "packagesPath": "/Users/deniskharchevnikov/.nuget/packages/",
+      "outputPath": "/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/starkre/.nuget/NuGet/NuGet.Config"
+        "/Users/deniskharchevnikov/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -38,6 +38,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -54,12 +59,26 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[7.0.20, 7.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.osx-arm64",
+            "version": "[7.0.20, 7.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[7.0.20, 7.0.20]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/Users/starkre/.dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/RuntimeIdentifierGraph.json"
       }
     }
   }

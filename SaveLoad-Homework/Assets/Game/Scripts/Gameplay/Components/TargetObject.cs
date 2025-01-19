@@ -1,7 +1,7 @@
 using Modules.Entities;
 using UnityEngine;
 
-namespace SampleGame.Gameplay
+namespace Game.Scripts.Gameplay.Components
 {
     //Can be extended
     public sealed class TargetObject : MonoBehaviour

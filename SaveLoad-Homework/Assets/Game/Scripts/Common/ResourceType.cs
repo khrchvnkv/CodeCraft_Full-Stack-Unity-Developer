@@ -1,4 +1,4 @@
-namespace SampleGame.Common
+namespace Game.Scripts.Common
 {
     //Don't modify
     public enum ResourceType
