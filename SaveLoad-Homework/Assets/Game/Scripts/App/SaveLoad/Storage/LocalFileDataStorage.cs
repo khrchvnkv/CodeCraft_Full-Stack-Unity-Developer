@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Game.Scripts.App.SaveLoad.Storage.Contracts;
 using Newtonsoft.Json;
 
 namespace Game.Scripts.App.SaveLoad.Storage
 {
-    public class LocalFileStorage : IDataStorage
+    public class LocalFileDataStorage : ILocalDataStorage
     {
         private const string DATABASE_FILE_NAME = "Database.txt"; 
         
@@ -18,7 +19,7 @@ namespace Game.Scripts.App.SaveLoad.Storage
 
         private HashSet<int> _gameVersions;
 
-        public LocalFileStorage(
+        public LocalFileDataStorage(
             string filePath,
             string fileName)
         {

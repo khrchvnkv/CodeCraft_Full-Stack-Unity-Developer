@@ -1,4 +1,6 @@
 using Game.Scripts.App.SaveLoad.Storage.Dto;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
 using Game.Scripts.Gameplay.Components;
 using Modules.Entities;
 
@@ -7,6 +9,8 @@ namespace Game.Scripts.App.SaveLoad.Storage.Serializers
     public class TargetObjectSerializer : MonoSerializer<TargetObject, TargetObjectDto>
     {
         private readonly EntityWorld _world;
+
+        public override SerializationPriority Priority => SerializationPriority.Normal;
 
         public TargetObjectSerializer(EntityWorld world)
         {

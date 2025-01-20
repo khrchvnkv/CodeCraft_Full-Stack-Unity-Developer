@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Reflection;
 using Game.Scripts.App.SaveLoad.Storage;
-using Game.Scripts.App.SaveLoad.Storage.Serializers;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
 using UnityEngine;
 using Zenject;
 
@@ -20,34 +20,32 @@ namespace Game.Scripts.App.SaveLoad
             if (_useLocalFileStorage)
             {
                 Container
-                    .BindInterfacesAndSelfTo<LocalFileStorage>()
+                    .BindInterfacesAndSelfTo<LocalFileDataStorage>()
                     .AsSingle()
                     .WithArguments(Application.streamingAssetsPath, "save_{0}.txt");
             }
             else
             {
                 Container
-                    .BindInterfacesAndSelfTo<PlayerPrefsStorage>()
+                    .BindInterfacesAndSelfTo<PlayerPrefsDataStorage>()
                     .AsSingle();
             }
-
-            Container
-                .BindInterfacesAndSelfTo<EntitiesSerializer>()
-                .AsCached();
             
-            InstallMonoSerializers();
+            Container
+                .BindInterfacesAndSelfTo<RemoteDataDataStorage>()
+                .AsSingle()
+                .WithArguments("http://127.0.0.1:8888");
+
+            InstallSerializers();
         }
         
-        private void InstallMonoSerializers()
+        private void InstallSerializers()
         {
             var monoSerializerType = typeof(BaseSerializer);
             var types = Assembly
                 .GetAssembly(monoSerializerType)
                 .GetTypes()
-                .Where(t => monoSerializerType.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
-                .ToHashSet();
-            
-            types.Remove(typeof(EntitiesSerializer));
+                .Where(t => monoSerializerType.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
             
             foreach (var type in types)
             {

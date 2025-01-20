@@ -3,7 +3,7 @@ using Modules.Entities;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers
+namespace Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts
 {
     public abstract class MonoSerializer<TComponent, TData> : BaseSerializer where TComponent : Component
     {

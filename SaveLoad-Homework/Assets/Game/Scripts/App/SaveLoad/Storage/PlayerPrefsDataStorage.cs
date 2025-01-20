@@ -1,8 +1,9 @@
+using Game.Scripts.App.SaveLoad.Storage.Contracts;
 using UnityEngine;
 
 namespace Game.Scripts.App.SaveLoad.Storage
 {
-    public class PlayerPrefsStorage : IDataStorage
+    public class PlayerPrefsDataStorage : ILocalDataStorage
     {
         private const string SavedVersion = "version";
         private const string DataKey = "progress";

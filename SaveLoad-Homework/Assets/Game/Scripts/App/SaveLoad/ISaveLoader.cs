@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
+
 namespace Game.Scripts.App.SaveLoad
 {
     public interface ISaveLoader
     {
-        bool Save(out int version);
-        bool Load(in int version);
+        UniTask<(bool, int)> Save();
+        UniTask<bool> Load(int version);
     }
 }

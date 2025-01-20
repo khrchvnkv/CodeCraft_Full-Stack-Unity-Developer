@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using Game.Scripts.App.SaveLoad.Storage;
-using Game.Scripts.App.SaveLoad.Storage.Serializers;
+using System.Linq;
+using Cysharp.Threading.Tasks;
+using Game.Scripts.App.SaveLoad.Storage.Contracts;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
 using Modules.Entities;
 using Newtonsoft.Json;
 
@@ -9,20 +11,23 @@ namespace Game.Scripts.App.SaveLoad
     public class SaveLoader : ISaveLoader
     {
         private readonly ISerializer[] _serializers;
-        private readonly IDataStorage _storage;
+        private readonly ILocalDataStorage _localDataStorage;
+        private readonly IRemoteDataStorage _remoteDataStorage;
         private readonly EntityWorld _world;
 
         public SaveLoader(
             ISerializer[] serializers, 
-            IDataStorage storage,
+            ILocalDataStorage localDataStorage,
+            IRemoteDataStorage remoteDataStorage,
             EntityWorld world)
         {
-            _serializers = serializers;
-            _storage = storage;
+            _serializers = serializers.OrderBy(x => x.Priority).ToArray();
+            _localDataStorage = localDataStorage;
+            _remoteDataStorage = remoteDataStorage;
             _world = world;
         }
 
-        public bool Save(out int version)
+        public async UniTask<(bool, int)> Save()
         {
             var dataContainer = new Dictionary<string, string>();
             foreach (var serializer in _serializers)
@@ -31,12 +36,25 @@ namespace Game.Scripts.App.SaveLoad
             }
 
             var data = JsonConvert.SerializeObject(dataContainer);
-            return _storage.Write(data, out version);
+            var localResult = _localDataStorage.Write(data, out var version);
+            if (localResult)
+            {
+                var remoteResult = await _remoteDataStorage.Write(version, data);
+                return (remoteResult, version);
+            }
+
+            return (false, -1);
         }
 
-        public bool Load(in int version)
+        public async UniTask<bool> Load(int version)
         {
-            if (_storage.Read(version, out var data))
+            var result = _localDataStorage.Read(version, out var data);
+            if (!result)
+            {
+                (result, data) = await _remoteDataStorage.Read(version);
+            }
+            
+            if (result)
             {
                 _world.DestroyAll();
                 var dataContainer = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);

@@ -1,10 +1,14 @@
 using Game.Scripts.App.SaveLoad.Storage.Dto;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
 using Game.Scripts.Gameplay.Components;
 
 namespace Game.Scripts.App.SaveLoad.Storage.Serializers
 {
     public class HealthSerializer : MonoSerializer<Health, HealthData>
     {
+        public override SerializationPriority Priority => SerializationPriority.Normal;
+
         protected override HealthData SerializeComponent(in Health component)
         {
             return new HealthData

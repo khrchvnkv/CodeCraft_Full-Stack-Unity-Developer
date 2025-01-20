@@ -1,6 +1,6 @@
-namespace Game.Scripts.App.SaveLoad.Storage
+namespace Game.Scripts.App.SaveLoad.Storage.Contracts
 {
-    public interface IDataStorage
+    public interface ILocalDataStorage
     {
         bool Write(in string data, out int version);
         bool Read(in int version, out string data);

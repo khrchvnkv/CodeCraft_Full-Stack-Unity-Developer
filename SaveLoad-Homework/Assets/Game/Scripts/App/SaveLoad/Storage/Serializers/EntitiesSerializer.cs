@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Game.Scripts.App.SaveLoad.Storage.Dto;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
 using Modules.Entities;
 using Newtonsoft.Json;
 
@@ -7,6 +9,8 @@ namespace Game.Scripts.App.SaveLoad.Storage.Serializers
 {
     public class EntitiesSerializer : BaseSerializer
     {
+        public override SerializationPriority Priority => SerializationPriority.High;
+
         protected override void SerializeData(in IDictionary<string, string> dataContainer, in Entity[] entities)
         {
             var data = new EntityData[entities.Length];

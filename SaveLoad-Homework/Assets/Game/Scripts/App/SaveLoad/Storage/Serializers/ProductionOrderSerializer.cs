@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Game.Scripts.App.SaveLoad.Storage.Dto;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
+using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
 using Game.Scripts.Gameplay.Components;
 using Modules.Entities;
 
@@ -8,6 +10,8 @@ namespace Game.Scripts.App.SaveLoad.Storage.Serializers
     public class ProductionOrderSerializer : MonoSerializer<ProductionOrder, ProductionOrderData>
     {
         private readonly EntityCatalog _entityCatalog;
+        
+        public override SerializationPriority Priority => SerializationPriority.Normal;
 
         public ProductionOrderSerializer(EntityCatalog entityCatalog)
         {

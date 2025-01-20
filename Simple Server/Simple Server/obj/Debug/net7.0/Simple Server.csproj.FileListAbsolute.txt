@@ -61,3 +61,26 @@
 /Users/starkre/Desktop/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.pdb
 /Users/starkre/Desktop/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.genruntimeconfig.cache
 /Users/starkre/Desktop/Simple Server/Simple Server/obj/Debug/net7.0/ref/Simple Server.dll
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Simple Server
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Simple Server.deps.json
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Simple Server.runtimeconfig.json
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Simple Server.dll
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Simple Server.pdb
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Newtonsoft.Json.dll
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Zenject-Signals.dll
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Zenject-usage.dll
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Zenject.dll
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Newtonsoft.Json.pdb
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/bin/Debug/net7.0/Newtonsoft.Json.xml
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.csproj.AssemblyReference.cache
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.GeneratedMSBuildEditorConfig.editorconfig
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.AssemblyInfoInputs.cache
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.AssemblyInfo.cs
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.csproj.CoreCompileInputs.cache
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.sourcelink.json
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple S.D69A531A.Up2Date
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.dll
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/refint/Simple Server.dll
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.pdb
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/Simple Server.genruntimeconfig.cache
+/Users/deniskharchevnikov/Develop/Pet-UnityProjects/CodeCraft_Full-Stack-Unity-Developer/Simple Server/Simple Server/obj/Debug/net7.0/ref/Simple Server.dll
