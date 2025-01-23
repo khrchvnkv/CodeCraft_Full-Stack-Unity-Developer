@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Dto
+namespace Game.App
 {
     [Serializable]
     public struct TargetObjectDto

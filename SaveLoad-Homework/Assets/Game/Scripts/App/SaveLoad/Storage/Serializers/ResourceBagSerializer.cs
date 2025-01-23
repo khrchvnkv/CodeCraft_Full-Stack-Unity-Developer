@@ -1,11 +1,8 @@
-using Game.Scripts.App.SaveLoad.Storage.Dto;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
-using Game.Scripts.Gameplay.Components;
+using Game.Gameplay;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers
+namespace Game.App
 {
-    public class ResourceBagSerializer : MonoSerializer<ResourceBag, ResourceBagData>
+    public class ResourceBagSerializer : ComponentSerializer<ResourceBag, ResourceBagData>
     {
         public override SerializationPriority Priority => SerializationPriority.Normal;
 

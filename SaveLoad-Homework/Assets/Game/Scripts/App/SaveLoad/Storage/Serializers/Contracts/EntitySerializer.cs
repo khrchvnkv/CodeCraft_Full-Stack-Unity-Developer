@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
 using Modules.Entities;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts
+namespace Game.App
 {
-    public abstract class BaseSerializer : ISerializer
+    public abstract class EntitySerializer : ISerializer
     {
         protected string SerializerKey => GetType().FullName;
 

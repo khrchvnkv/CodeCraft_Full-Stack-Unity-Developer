@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Scripts.Common
+namespace Game.Common
 {
     //Don't modify
     [Serializable]

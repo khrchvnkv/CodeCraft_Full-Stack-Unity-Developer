@@ -1,47 +1,27 @@
 using System.Linq;
 using System.Reflection;
-using Game.Scripts.App.SaveLoad.Storage;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
-using UnityEngine;
 using Zenject;
 
-namespace Game.Scripts.App.SaveLoad
+namespace Game.App
 {
     public class SaveLoadInstaller : MonoInstaller
     {
-        [SerializeField] private bool _useLocalFileStorage;
-        
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesAndSelfTo<SaveLoader>()
+                .BindInterfacesAndSelfTo<EntityRepository>()
                 .AsSingle();
-
-            if (_useLocalFileStorage)
-            {
-                Container
-                    .BindInterfacesAndSelfTo<LocalFileDataStorage>()
-                    .AsSingle()
-                    .WithArguments(Application.streamingAssetsPath, "save_{0}.txt");
-            }
-            else
-            {
-                Container
-                    .BindInterfacesAndSelfTo<PlayerPrefsDataStorage>()
-                    .AsSingle();
-            }
             
             Container
-                .BindInterfacesAndSelfTo<RemoteDataDataStorage>()
-                .AsSingle()
-                .WithArguments("http://127.0.0.1:8888");
+                .BindInterfacesAndSelfTo<EntitySaveLoader>()
+                .AsSingle();
 
             InstallSerializers();
         }
         
         private void InstallSerializers()
         {
-            var monoSerializerType = typeof(BaseSerializer);
+            var monoSerializerType = typeof(EntitySerializer);
             var types = Assembly
                 .GetAssembly(monoSerializerType)
                 .GetTypes()

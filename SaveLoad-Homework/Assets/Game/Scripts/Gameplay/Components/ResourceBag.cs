@@ -1,7 +1,7 @@
-using Game.Scripts.Common;
+using Game.Common;
 using UnityEngine;
 
-namespace Game.Scripts.Gameplay.Components
+namespace Game.Gameplay
 {
     //Can be extended
     public sealed class ResourceBag : MonoBehaviour

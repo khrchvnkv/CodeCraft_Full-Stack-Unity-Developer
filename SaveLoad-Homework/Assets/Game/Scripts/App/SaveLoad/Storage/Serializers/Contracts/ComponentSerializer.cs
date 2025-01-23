@@ -3,9 +3,9 @@ using Modules.Entities;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts
+namespace Game.App
 {
-    public abstract class MonoSerializer<TComponent, TData> : BaseSerializer where TComponent : Component
+    public abstract class ComponentSerializer<TComponent, TData> : EntitySerializer where TComponent : Component
     {
         protected override void SerializeData(in IDictionary<string, string> dataContainer, in Entity[] entities)
         {

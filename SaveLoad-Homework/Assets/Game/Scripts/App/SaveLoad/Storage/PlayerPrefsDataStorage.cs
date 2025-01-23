@@ -1,7 +1,6 @@
-using Game.Scripts.App.SaveLoad.Storage.Contracts;
 using UnityEngine;
 
-namespace Game.Scripts.App.SaveLoad.Storage
+namespace Game.App
 {
     public class PlayerPrefsDataStorage : ILocalDataStorage
     {

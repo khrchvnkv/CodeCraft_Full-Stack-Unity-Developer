@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace Game.Scripts.UI
+namespace Game.UI
 {
     //Don't modify
     public sealed class UIInstaller : MonoInstaller

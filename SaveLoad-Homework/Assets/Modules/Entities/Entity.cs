@@ -4,7 +4,7 @@ namespace Modules.Entities
 {
     //Don't modify
     [RequireComponent(typeof(Transform))]
-    public sealed class Entity : MonoBehaviour
+    public sealed class  Entity : MonoBehaviour
     {
         public string Name => _config ? _config.Name : string.Empty;
         public EntityType Type => _config ? _config.Type : EntityType.None;

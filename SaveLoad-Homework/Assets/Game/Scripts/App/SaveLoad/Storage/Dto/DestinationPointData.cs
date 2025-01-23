@@ -1,7 +1,7 @@
 using System;
-using Game.Scripts.Common;
+using Game.Common;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Dto
+namespace Game.App
 {
     [Serializable]
     public struct DestinationPointData

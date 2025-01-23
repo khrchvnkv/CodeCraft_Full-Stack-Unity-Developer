@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
 using Modules.Entities;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts
+namespace Game.App
 {
     public interface ISerializer
     {

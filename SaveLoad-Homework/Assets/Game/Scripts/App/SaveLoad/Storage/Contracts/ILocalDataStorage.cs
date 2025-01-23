@@ -1,4 +1,4 @@
-namespace Game.Scripts.App.SaveLoad.Storage.Contracts
+namespace Game.App
 {
     public interface ILocalDataStorage
     {

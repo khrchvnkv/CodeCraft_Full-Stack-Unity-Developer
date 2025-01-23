@@ -1,8 +1,8 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Game.Scripts.App.SaveLoad;
+using Game.App;
 
-namespace Game.Scripts.UI
+namespace Game.UI
 {
     public sealed class ControlsPresenter : IControlsPresenter
     {

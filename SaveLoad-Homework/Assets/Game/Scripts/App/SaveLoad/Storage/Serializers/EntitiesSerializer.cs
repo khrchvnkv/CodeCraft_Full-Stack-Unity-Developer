@@ -1,13 +1,10 @@
 using System.Collections.Generic;
-using Game.Scripts.App.SaveLoad.Storage.Dto;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
 using Modules.Entities;
 using Newtonsoft.Json;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers
+namespace Game.App
 {
-    public class EntitiesSerializer : BaseSerializer
+    public class EntitiesSerializer : EntitySerializer
     {
         public override SerializationPriority Priority => SerializationPriority.High;
 

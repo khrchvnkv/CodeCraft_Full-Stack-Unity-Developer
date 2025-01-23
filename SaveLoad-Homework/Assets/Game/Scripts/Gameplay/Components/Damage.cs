@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Scripts.Gameplay.Components
+namespace Game.Gameplay
 {
     //Can be extended
     public sealed class Damage : MonoBehaviour

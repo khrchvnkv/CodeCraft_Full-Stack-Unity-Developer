@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Game.Scripts.App.SaveLoad.Storage.Contracts;
 using Newtonsoft.Json;
 
-namespace Game.Scripts.App.SaveLoad.Storage
+namespace Game.App
 {
     public class LocalFileDataStorage : ILocalDataStorage
     {

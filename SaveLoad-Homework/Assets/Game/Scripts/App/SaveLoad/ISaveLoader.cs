@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace Game.Scripts.App.SaveLoad
+namespace Game.App
 {
     public interface ISaveLoader
     {

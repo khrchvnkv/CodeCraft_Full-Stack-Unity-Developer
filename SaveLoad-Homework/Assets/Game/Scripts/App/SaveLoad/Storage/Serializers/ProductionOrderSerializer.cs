@@ -1,13 +1,10 @@
 using System.Collections.Generic;
-using Game.Scripts.App.SaveLoad.Storage.Dto;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
-using Game.Scripts.Gameplay.Components;
+using Game.Gameplay;
 using Modules.Entities;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers
+namespace Game.App
 {
-    public class ProductionOrderSerializer : MonoSerializer<ProductionOrder, ProductionOrderData>
+    public class ProductionOrderSerializer : ComponentSerializer<ProductionOrder, ProductionOrderData>
     {
         private readonly EntityCatalog _entityCatalog;
         

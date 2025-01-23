@@ -1,12 +1,9 @@
-using Game.Scripts.App.SaveLoad.Storage.Dto;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Enums;
-using Game.Scripts.Gameplay.Components;
+using Game.Gameplay;
 using Modules.Entities;
 
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers
+namespace Game.App
 {
-    public class TargetObjectSerializer : MonoSerializer<TargetObject, TargetObjectDto>
+    public class TargetObjectSerializer : ComponentSerializer<TargetObject, TargetObjectDto>
     {
         private readonly EntityWorld _world;
 

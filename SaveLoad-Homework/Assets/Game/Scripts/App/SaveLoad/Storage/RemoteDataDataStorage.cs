@@ -1,8 +1,7 @@
 using Cysharp.Threading.Tasks;
-using Game.Scripts.App.SaveLoad.Storage.Contracts;
 using UnityEngine.Networking;
 
-namespace Game.Scripts.App.SaveLoad.Storage
+namespace Game.App
 {
     public class RemoteDataDataStorage : IRemoteDataStorage
     {

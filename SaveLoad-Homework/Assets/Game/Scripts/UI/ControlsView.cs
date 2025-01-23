@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Scripts.UI
+namespace Game.UI
 {
     //Don't modify
     public sealed class ControlsView : MonoBehaviour

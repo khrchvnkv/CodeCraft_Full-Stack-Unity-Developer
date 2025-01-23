@@ -1,29 +1,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Game.Scripts.App.SaveLoad.Storage.Contracts;
-using Game.Scripts.App.SaveLoad.Storage.Serializers.Contracts;
 using Modules.Entities;
 using Newtonsoft.Json;
 
-namespace Game.Scripts.App.SaveLoad
+namespace Game.App
 {
-    public class SaveLoader : ISaveLoader
+    public class EntitySaveLoader : ISaveLoader
     {
         private readonly ISerializer[] _serializers;
-        private readonly ILocalDataStorage _localDataStorage;
-        private readonly IRemoteDataStorage _remoteDataStorage;
+        private readonly IRepository _repository;
         private readonly EntityWorld _world;
 
-        public SaveLoader(
+        public EntitySaveLoader(
             ISerializer[] serializers, 
-            ILocalDataStorage localDataStorage,
-            IRemoteDataStorage remoteDataStorage,
+            IRepository repository,
             EntityWorld world)
         {
             _serializers = serializers.OrderBy(x => x.Priority).ToArray();
-            _localDataStorage = localDataStorage;
-            _remoteDataStorage = remoteDataStorage;
+            _repository = repository;
             _world = world;
         }
 
@@ -36,23 +31,13 @@ namespace Game.Scripts.App.SaveLoad
             }
 
             var data = JsonConvert.SerializeObject(dataContainer);
-            var localResult = _localDataStorage.Write(data, out var version);
-            if (localResult)
-            {
-                var remoteResult = await _remoteDataStorage.Write(version, data);
-                return (remoteResult, version);
-            }
-
-            return (false, -1);
+            var saveResult = await _repository.SetData(data);
+            return saveResult;
         }
 
         public async UniTask<bool> Load(int version)
         {
-            var result = _localDataStorage.Read(version, out var data);
-            if (!result)
-            {
-                (result, data) = await _remoteDataStorage.Read(version);
-            }
+            var (result, data) = await _repository.GetData(version);
             
             if (result)
             {

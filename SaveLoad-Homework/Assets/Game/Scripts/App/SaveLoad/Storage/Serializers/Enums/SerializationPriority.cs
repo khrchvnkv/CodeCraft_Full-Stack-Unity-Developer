@@ -1,4 +1,4 @@
-namespace Game.Scripts.App.SaveLoad.Storage.Serializers.Enums
+namespace Game.App
 {
     public enum SerializationPriority
     {
