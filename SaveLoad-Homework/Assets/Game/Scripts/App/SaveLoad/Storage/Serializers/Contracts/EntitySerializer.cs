@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Modules.Entities;
 
 namespace Game.App
@@ -13,19 +12,17 @@ namespace Game.App
         void ISerializer.Serialize(in IDictionary<string, string> dataContainer, in EntityWorld world)
         {
             ClearDataInContainer(dataContainer);
-            SerializeData(dataContainer, GetEntities(world));
+            SerializeData(dataContainer, world.GetAll());
         }
 
         void ISerializer.Deserialize(in IDictionary<string, string> dataContainer, in EntityWorld world) => 
             DeserializeData(dataContainer, world);
 
 
-        protected abstract void SerializeData(in IDictionary<string, string> dataContainer, in Entity[] entities);
+        protected abstract void SerializeData(in IDictionary<string, string> dataContainer, in IReadOnlyCollection<Entity> entities);
 
         protected abstract void DeserializeData(in IDictionary<string, string> dataContainer, in EntityWorld world);
         
         private void ClearDataInContainer(in IDictionary<string, string> dataContainer) => dataContainer.Remove(SerializerKey);
-
-        private Entity[] GetEntities(in EntityWorld world) => world.GetAll().ToArray();
     }
 }

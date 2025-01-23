@@ -7,7 +7,7 @@ namespace Game.App
 {
     public abstract class ComponentSerializer<TComponent, TData> : EntitySerializer where TComponent : Component
     {
-        protected override void SerializeData(in IDictionary<string, string> dataContainer, in Entity[] entities)
+        protected override void SerializeData(in IDictionary<string, string> dataContainer, in IReadOnlyCollection<Entity> entities)
         {
             var data = new Dictionary<int, TData>();
             

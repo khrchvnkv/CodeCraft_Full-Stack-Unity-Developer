@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Reflection;
 using Zenject;
 
 namespace Game.App
@@ -16,23 +14,22 @@ namespace Game.App
                 .BindInterfacesAndSelfTo<EntitySaveLoader>()
                 .AsSingle();
 
-            InstallSerializers();
-        }
-        
-        private void InstallSerializers()
-        {
-            var monoSerializerType = typeof(EntitySerializer);
-            var types = Assembly
-                .GetAssembly(monoSerializerType)
-                .GetTypes()
-                .Where(t => monoSerializerType.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
+            InstallSerializer<EntitiesSerializer>();
             
-            foreach (var type in types)
-            {
-                Container
-                    .BindInterfacesAndSelfTo(type)
-                    .AsCached();
-            }
+            InstallSerializer<CountdownSerializer>();
+            InstallSerializer<DestinationSerializer>();
+            InstallSerializer<HealthSerializer>();
+            InstallSerializer<ProductionOrderSerializer>();
+            InstallSerializer<ResourceBagSerializer>();
+            InstallSerializer<TargetObjectSerializer>();
+            InstallSerializer<TeamSerializer>();
+        }
+
+        private void InstallSerializer<T>() where T : EntitySerializer
+        {
+            Container
+                .BindInterfacesAndSelfTo<T>()
+                .AsCached();
         }
     }
 }

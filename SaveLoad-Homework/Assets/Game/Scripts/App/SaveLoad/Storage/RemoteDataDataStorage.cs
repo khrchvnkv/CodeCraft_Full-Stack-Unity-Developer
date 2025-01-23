@@ -29,7 +29,10 @@ namespace Game.App
             if (request.result == UnityWebRequest.Result.Success)
             {
                 var json = request.downloadHandler.text;
-                return (true, json);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    return (true, json);
+                }
             }
 
             return (false, string.Empty);

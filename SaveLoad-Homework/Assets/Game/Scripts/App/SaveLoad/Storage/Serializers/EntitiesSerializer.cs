@@ -8,13 +8,13 @@ namespace Game.App
     {
         public override SerializationPriority Priority => SerializationPriority.High;
 
-        protected override void SerializeData(in IDictionary<string, string> dataContainer, in Entity[] entities)
+        protected override void SerializeData(in IDictionary<string, string> dataContainer, in IReadOnlyCollection<Entity> entities)
         {
-            var data = new EntityData[entities.Length];
+            var data = new EntityData[entities.Count];
 
-            for (int i = 0; i < entities.Length; i++)
+            var index = 0;
+            foreach (var entity in entities)
             {
-                var entity = entities[i];
                 var transform = entity.transform;
                 var entityData = new EntityData
                 {
@@ -24,7 +24,8 @@ namespace Game.App
                     Rotation = transform.rotation
                 };
 
-                data[i] = entityData;
+                data[index] = entityData;
+                index++;
             }
 
             dataContainer[SerializerKey] = JsonConvert.SerializeObject(data);
