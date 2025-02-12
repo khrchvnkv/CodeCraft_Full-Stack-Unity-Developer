@@ -7,7 +7,7 @@ namespace Game.Scripts.Objects
 {
     public sealed class Character : MonoBehaviour,
         IDamageable,
-        IKillable,
+        IDieable,
         IPlatformMovable,
         JumpComponent.ICondition,
         MoveComponent.ICondition,
@@ -59,7 +59,7 @@ namespace Game.Scripts.Objects
 
         void IDamageable.TakeDamage(in int damage) => _healthComponent.TakeDamage(damage);
 
-        void IKillable.Kill() => _healthComponent.Kill();
+        void IDieable.Die() => _healthComponent.Kill();
 
         bool JumpComponent.ICondition.Invoke() => IsAlive() && IsGrounded();
 

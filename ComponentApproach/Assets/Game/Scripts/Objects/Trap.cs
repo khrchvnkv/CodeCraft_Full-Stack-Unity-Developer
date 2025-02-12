@@ -6,9 +6,11 @@ using Zenject;
 namespace Game.Scripts.Objects
 {
     public class Trap : MonoBehaviour,
-        IKillable,
+        IDieable,
         IPlatformMovable,
-        PushComponent.ICondition
+        IAttackable,
+        PushComponent.ICondition,
+        AttackComponent.ICondition
     {
         private PushComponent _pushComponent;
         private AttackComponent _attackComponent;
@@ -26,7 +28,7 @@ namespace Game.Scripts.Objects
             _attackComponent = attackComponent;
         }
 
-        public void Attack(in IDamageable damageable, in Rigidbody2D rb)
+        void IAttackable.Attack(IDamageable damageable, Rigidbody2D rb)
         {
             _attackComponent.Attack(damageable);
 
@@ -34,8 +36,12 @@ namespace Game.Scripts.Objects
             _pushComponent.Push(rb, direction);
         }
 
-        void IKillable.Kill() => gameObject.SetActive(false);
+        void IDieable.Die() => gameObject.SetActive(false);
 
-        bool PushComponent.ICondition.Invoke() => gameObject.activeSelf;
+        bool PushComponent.ICondition.Invoke() => IsGameObjectActive();
+
+        bool AttackComponent.ICondition.Invoke() => IsGameObjectActive();
+
+        private bool IsGameObjectActive() => gameObject.activeSelf;
     }
 }

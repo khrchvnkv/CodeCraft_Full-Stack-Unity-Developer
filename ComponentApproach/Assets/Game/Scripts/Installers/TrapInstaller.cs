@@ -1,6 +1,5 @@
 using Game.Scripts.Collision;
 using Game.Scripts.Components;
-using Game.Scripts.Controllers;
 using Game.Scripts.Objects;
 using UnityEngine;
 using Zenject;
@@ -25,10 +24,6 @@ namespace Game.Scripts.Installers
             Container
                 .BindInterfacesAndSelfTo<Trap>()
                 .FromInstance(_trap)
-                .AsSingle();
-
-            Container
-                .BindInterfacesAndSelfTo<TrapController>()
                 .AsSingle();
 
             Container

@@ -7,9 +7,9 @@ namespace Game.Scripts.Triggers
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent(out IKillable killable))
+            if (other.TryGetComponent(out IDieable killable))
             {
-                killable.Kill();
+                killable.Die();
             }
         }
     }

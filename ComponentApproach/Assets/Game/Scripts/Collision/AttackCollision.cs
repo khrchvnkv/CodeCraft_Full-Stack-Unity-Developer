@@ -1,15 +1,23 @@
-using System;
 using System.Collections.Generic;
 using Game.Scripts.Contracts;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Scripts.Collision
 {
     public class AttackCollision : MonoBehaviour
     {
+        [SerializeField] private bool _debug;
+        
         private readonly HashSet<IDamageable> _damageables = new();
 
-        public event Action<IDamageable, Rigidbody2D> DamageableCollided;
+        private IAttackable _attackable;
+        
+        [Inject]
+        private void Construct(IAttackable attackable)
+        {
+            _attackable = attackable;
+        }
         
         private void OnCollisionEnter2D(Collision2D other)
         {
@@ -18,7 +26,7 @@ namespace Game.Scripts.Collision
                 !_damageables.Contains(damageable))
             {
                 _damageables.Add(damageable);
-                DamageableCollided?.Invoke(damageable, rb);
+                _attackable.Attack(damageable, rb);
             }
         }
 
