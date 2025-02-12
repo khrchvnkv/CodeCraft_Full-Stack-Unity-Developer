@@ -2,20 +2,33 @@ using UnityEngine;
 
 namespace Game.Scripts.Components
 {
-    public class MoveComponent : MonoBehaviour
+    public class MoveComponent
     {
-        [SerializeField] private Rigidbody2D _rigidbody;
-        [SerializeField] private float _movementSpeed;
+        private readonly ICondition _condition;
+        private readonly Rigidbody2D _rigidbody;
+        private readonly float _movementSpeed;
 
-        private ICondition _condition;
-
-        public void Construct(in ICondition condition) => _condition = condition;
+        public MoveComponent(
+            ICondition condition,
+            Rigidbody2D rigidbody, 
+            float movementSpeed)
+        {
+            _condition = condition;
+            _rigidbody = rigidbody;
+            _movementSpeed = movementSpeed;
+        }
 
         public void Move(in Vector2 direction)
         {
             if (_condition.Invoke())
             {
-                _rigidbody.velocity = new Vector2(direction.x * _movementSpeed, _rigidbody.velocity.y);
+                var deltaTime = Time.deltaTime;
+                var deltaMovement= direction.normalized * _movementSpeed * deltaTime;
+                
+                {
+                    var velocityDeltaMove = _rigidbody.velocity * deltaTime;
+                    _rigidbody.position += velocityDeltaMove + deltaMovement;
+                }
             }
         }
         

@@ -2,28 +2,38 @@ using UnityEngine;
 
 namespace Game.Scripts.Components
 {
-    public class RotateComponent : MonoBehaviour
+    public class RotateComponent
     {
-        private ICondition _condition;
+        private readonly ICondition _condition;
+        private readonly Transform _transform;
 
-        public void Construct(in ICondition condition) => _condition = condition;
+        public float LookDirection { get; private set; }
+
+        public RotateComponent(
+            ICondition condition,
+            Transform transform)
+        {
+            _condition = condition;
+            _transform = transform;
+        }
 
         public void LookInDirection(in Vector2 direction)
         {
             if (_condition.Invoke())
             {
-                var localScale = transform.localScale;
+                LookDirection = FaceDirection(direction);
+                var localScale = _transform.localScale;
                 float scaleX = Mathf.Abs(localScale.x);
-                localScale = new Vector3(scaleX * FaceDirection(direction), localScale.y, localScale.z);
-                transform.localScale = localScale;
+                localScale = new Vector3(scaleX * LookDirection, localScale.y, localScale.z);
+                _transform.localScale = localScale;
             }
         }
 
         private float FaceDirection(in Vector2 direction) =>
-            direction.x <= 0 
-                ? -1 
+            direction.x <= 0
+                ? -1
                 : 1;
-        
+
         public interface ICondition
         {
             bool Invoke();
