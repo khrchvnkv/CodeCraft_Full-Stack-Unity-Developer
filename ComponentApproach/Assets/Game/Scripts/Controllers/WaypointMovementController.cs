@@ -3,11 +3,11 @@ using Zenject;
 
 namespace Game.Scripts.Controllers
 {
-    public class PlatformController : IFixedTickable
+    public class WaypointMovementController : IFixedTickable
     {
         private readonly WaypointMovementComponent _waypointMovementComponent;
 
-        public PlatformController(WaypointMovementComponent waypointMovementComponent)
+        public WaypointMovementController(WaypointMovementComponent waypointMovementComponent)
         {
             _waypointMovementComponent = waypointMovementComponent;
         }

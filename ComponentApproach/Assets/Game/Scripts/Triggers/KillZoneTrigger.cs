@@ -5,11 +5,14 @@ namespace Game.Scripts.Triggers
 {
     public class KillZoneTrigger : MonoBehaviour
     {
+        [SerializeField] private AudioSource _audioSource;
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent(out IDieable killable))
+            if (other.TryGetComponent(out IDieable dieable))
             {
-                killable.Die();
+                dieable.Die();
+                _audioSource.Play();
             }
         }
     }

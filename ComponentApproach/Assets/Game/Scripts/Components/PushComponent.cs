@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Scripts.Components
@@ -6,6 +8,9 @@ namespace Game.Scripts.Components
     {
         private readonly ICondition _condition;
         private readonly float _force;
+
+        public event Action Pushed;
+        public event Action EmptyPushed;
 
         public PushComponent(
             ICondition condition,
@@ -21,6 +26,26 @@ namespace Game.Scripts.Components
             {
                 rigidbody.velocity = Vector2.zero;
                 rigidbody.AddForce(direction.normalized * _force);
+                Pushed?.Invoke();
+            }
+        }
+
+        public void Push(in IReadOnlyCollection<Rigidbody2D> collection, in Vector2 fromCenter)
+        {
+            if (_condition.Invoke())
+            {
+                if (collection.Count > 0)
+                {
+                    foreach (var body in collection)
+                    {
+                        var direction = body.position - fromCenter;
+                        Push(body, direction);
+                    }
+                }
+                else
+                {
+                    EmptyPushed?.Invoke();
+                }
             }
         }
 

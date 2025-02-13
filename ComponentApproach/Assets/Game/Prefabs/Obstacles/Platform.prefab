@@ -323,6 +323,9 @@ GameObject:
   - component: {fileID: 1736318179580503177}
   - component: {fileID: 7517339263192465317}
   - component: {fileID: 4865676502818248015}
+  - component: {fileID: 7955623025112598231}
+  - component: {fileID: 3782908855183735229}
+  - component: {fileID: 920430836545822281}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -363,6 +366,9 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 4865676502818248015}
+  - {fileID: 7955623025112598231}
+  - {fileID: 3782908855183735229}
+  - {fileID: 920430836545822281}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
@@ -378,8 +384,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd9458518a1c4a8c98ae5ca509ab18fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7955623025112598231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655644000359545328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de9488371ef435183766998b8ffb4b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _rigidbody: {fileID: 1599025579162667576}
+--- !u!114 &3782908855183735229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655644000359545328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd440df69114506a5366bc2ea67c627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _waypoints:
   - {fileID: 5434138037557620653}
   - {fileID: 7441270365842623162}
+--- !u!114 &920430836545822281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655644000359545328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e0f5f83cc74155bcac471e0ef7cdd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _movementSpeed: 3

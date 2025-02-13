@@ -6,8 +6,6 @@ using Zenject;
 namespace Game.Scripts.Objects
 {
     public sealed class Character : MonoBehaviour,
-        IDamageable,
-        IDieable,
         IPlatformMovable,
         JumpComponent.ICondition,
         MoveComponent.ICondition,
@@ -19,10 +17,7 @@ namespace Game.Scripts.Objects
 
         private MoveComponent _moveComponent;
         private RotateComponent _rotateComponent;
-        private JumpComponent _jumpComponent;
         private HealthComponent _healthComponent;
-        private PushComponent _pushComponent;
-        private ThrowUpComponent _throwUpComponent;
         
         public Rigidbody2D Rigidbody { get; private set; }
 
@@ -30,18 +25,12 @@ namespace Game.Scripts.Objects
         private void Construct(
             MoveComponent moveComponent,
             RotateComponent rotateComponent,
-            JumpComponent jumpComponent,
             HealthComponent healthComponent,
-            PushComponent pushComponent,
-            ThrowUpComponent throwUpComponent,
             Rigidbody2D rb)
         {
             _moveComponent = moveComponent;
             _rotateComponent = rotateComponent;
-            _jumpComponent = jumpComponent;
             _healthComponent = healthComponent;
-            _pushComponent = pushComponent;
-            _throwUpComponent = throwUpComponent;
             Rigidbody = rb;
         }
 
@@ -50,16 +39,6 @@ namespace Game.Scripts.Objects
             _moveComponent.Move(direction);
             _rotateComponent.LookInDirection(direction);
         }
-
-        public void Jump() => _jumpComponent.Jump();
-
-        public void Push(in Rigidbody2D rb, in Vector2 direction) => _pushComponent.Push(rb, direction);
-
-        public void ThrowUp(Rigidbody2D rb) => _throwUpComponent.ThrowUp(rb);
-
-        void IDamageable.TakeDamage(in int damage) => _healthComponent.TakeDamage(damage);
-
-        void IDieable.Die() => _healthComponent.Kill();
 
         bool JumpComponent.ICondition.Invoke() => IsAlive() && IsGrounded();
 

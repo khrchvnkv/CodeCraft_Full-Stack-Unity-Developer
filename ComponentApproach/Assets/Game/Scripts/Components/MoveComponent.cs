@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game.Scripts.Components
@@ -7,6 +8,8 @@ namespace Game.Scripts.Components
         private readonly ICondition _condition;
         private readonly Rigidbody2D _rigidbody;
         private readonly float _movementSpeed;
+
+        public event Action<Vector2> MovedInDirection; 
 
         public MoveComponent(
             ICondition condition,
@@ -18,17 +21,17 @@ namespace Game.Scripts.Components
             _movementSpeed = movementSpeed;
         }
 
-        public void Move(in Vector2 direction)
+        public void Move(Vector2 direction)
         {
             if (_condition.Invoke())
             {
                 var deltaTime = Time.deltaTime;
-                var deltaMovement= direction.normalized * _movementSpeed * deltaTime;
+                direction = direction.normalized;
+                var deltaMovement= direction * _movementSpeed * deltaTime;
+                deltaMovement.x += _rigidbody.velocity.x * deltaTime;
+                _rigidbody.position += deltaMovement;
                 
-                {
-                    var velocityDeltaMove = _rigidbody.velocity * deltaTime;
-                    _rigidbody.position += velocityDeltaMove + deltaMovement;
-                }
+                MovedInDirection?.Invoke(direction);
             }
         }
         

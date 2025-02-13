@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game.Scripts.Components
@@ -10,6 +11,8 @@ namespace Game.Scripts.Components
         private readonly float _cooldown;
 
         private float? _lastJumpTime;
+
+        public event Action Jumped; 
 
         public JumpComponent(
             ICondition condition,
@@ -30,14 +33,10 @@ namespace Game.Scripts.Components
                 var zeroVelocityY = _rigidbody.velocity;
                 zeroVelocityY.y = 0;
                 _rigidbody.velocity = zeroVelocityY;
-
-                if (_rigidbody.isKinematic)
-                {
-                    _rigidbody.isKinematic = false;
-                }
-                
                 _rigidbody.AddForce(Vector2.up * _jumpForce);
                 _lastJumpTime = Time.time;
+                
+                Jumped?.Invoke();
             }
         }
 

@@ -6,6 +6,7 @@ namespace Game.Scripts.Components
 {
     public class HealthViewComponent : MonoBehaviour
     {
+        [SerializeField] private GameObject _deadDeactivatingGameObject;
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Color _defaultColor;
         [SerializeField] private Color _damageColor;
@@ -19,17 +20,24 @@ namespace Game.Scripts.Components
             HealthComponent healthComponent)
         {
             _healthComponent = healthComponent;
-            
-            Install();
         }
 
-        private void Install() => _healthComponent.HealthPointsDecreased += PlayDamageView;
-        
-        private void OnDestroy()
+        private void OnEnable()
         {
-            _healthComponent.HealthPointsDecreased -= PlayDamageView;
-            DOTween.Kill(_sequence);
+            _healthComponent.HealthPointsDecreased += PlayDamageView;
+            _healthComponent.Died += PlayDieView;
         }
+
+        private void OnDisable()
+        {
+            if (_healthComponent != null)
+            {
+                _healthComponent.HealthPointsDecreased -= PlayDamageView;
+                _healthComponent.Died -= PlayDieView;
+            }
+        }
+
+        private void OnDestroy() => _sequence.Kill();
 
         private void PlayDamageView()
         {
@@ -43,8 +51,11 @@ namespace Game.Scripts.Components
             }
             else
             {
+                _sequence.Complete();
                 _sequence.Restart();
             }
         }
+
+        private void PlayDieView() => _deadDeactivatingGameObject.SetActive(false);
     }
 }

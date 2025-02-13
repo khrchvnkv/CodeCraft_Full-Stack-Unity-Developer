@@ -1,11 +1,9 @@
 using System;
-using UnityEngine;
 
 namespace Game.Scripts.Components
 {
     public class HealthComponent
     {
-        private readonly GameObject _gameObject;
         private readonly int _maxHp;
         private int _hp;
 
@@ -45,11 +43,8 @@ namespace Game.Scripts.Components
         public event Action<int> HealthPointsChanged;
         public event Action Died;
 
-        public HealthComponent(
-            GameObject gameObject, 
-            int maxHp)
+        public HealthComponent(int maxHp)
         {
-            _gameObject = gameObject;
             _maxHp = maxHp;
             Hp = _maxHp;
         }
@@ -61,10 +56,6 @@ namespace Game.Scripts.Components
 
         public void Kill() => Hp = 0;
 
-        private void Die()
-        {
-            _gameObject.SetActive(false);
-            Died?.Invoke();
-        }
+        private void Die() => Died?.Invoke();
     }
 }

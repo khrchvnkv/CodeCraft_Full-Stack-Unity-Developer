@@ -5,16 +5,15 @@ namespace Game.Scripts.Components
     public class RotateComponent
     {
         private readonly ICondition _condition;
-        private readonly Transform _transform;
-
-        public float LookDirection { get; private set; }
+        private readonly Transform[] _transforms;
+        private float LookDirection { get; set; }
 
         public RotateComponent(
             ICondition condition,
-            Transform transform)
+            Transform[] transforms)
         {
             _condition = condition;
-            _transform = transform;
+            _transforms = transforms;
         }
 
         public void LookInDirection(in Vector2 direction)
@@ -22,10 +21,13 @@ namespace Game.Scripts.Components
             if (_condition.Invoke())
             {
                 LookDirection = FaceDirection(direction);
-                var localScale = _transform.localScale;
-                float scaleX = Mathf.Abs(localScale.x);
-                localScale = new Vector3(scaleX * LookDirection, localScale.y, localScale.z);
-                _transform.localScale = localScale;
+                foreach (var transform in _transforms)
+                {
+                    var localScale = transform.localScale;
+                    float scaleX = Mathf.Abs(localScale.x);
+                    localScale = new Vector3(scaleX * LookDirection, localScale.y, localScale.z);
+                    transform.localScale = localScale;
+                }
             }
         }
 

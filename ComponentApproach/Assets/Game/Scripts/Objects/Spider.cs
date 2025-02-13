@@ -6,9 +6,7 @@ using Zenject;
 namespace Game.Scripts.Objects
 {
     public class Spider : MonoBehaviour,
-        IDieable,
         IAttackable,
-        IDamageable,
         MoveComponent.ICondition,
         AttackComponent.ICondition,
         PushComponent.ICondition
@@ -38,10 +36,6 @@ namespace Game.Scripts.Objects
             var direction = rb.position - _rigidbody.position;
             _pushComponent.Push(rb, direction);
         }
-
-        void IDieable.Die() => _healthComponent.Kill();
-        
-        void IDamageable.TakeDamage(in int damage) => _healthComponent.TakeDamage(damage);
 
         bool MoveComponent.ICondition.Invoke() => IsAlive();
 

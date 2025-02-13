@@ -7,8 +7,6 @@ namespace Game.Scripts.Collision
 {
     public class AttackCollision : MonoBehaviour
     {
-        [SerializeField] private bool _debug;
-        
         private readonly HashSet<IDamageable> _damageables = new();
 
         private IAttackable _attackable;

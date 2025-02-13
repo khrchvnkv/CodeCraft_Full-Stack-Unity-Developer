@@ -1,0 +1,25 @@
+using System;
+using Game.Scripts.Components;
+using UnityEngine;
+using Zenject;
+
+namespace Game.Scripts.Controllers
+{
+    public class RotateByMovementController : IInitializable, IDisposable
+    {
+        private readonly MoveComponent _moveComponent;
+        private readonly RotateComponent _rotateComponent;
+
+        public RotateByMovementController(MoveComponent moveComponent, RotateComponent rotateComponent)
+        {
+            _moveComponent = moveComponent;
+            _rotateComponent = rotateComponent;
+        }
+
+        void IInitializable.Initialize() => _moveComponent.MovedInDirection += UpdateRotation;
+
+        void IDisposable.Dispose() => _moveComponent.MovedInDirection -= UpdateRotation;
+
+        private void UpdateRotation(Vector2 direction) => _rotateComponent.LookInDirection(direction);
+    }
+}

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Game.Scripts.Objects;
+using Game.Scripts.Components;
 using Game.Scripts.Triggers;
 using UnityEngine;
 using Zenject;
@@ -10,9 +10,13 @@ namespace Game.Scripts.Controllers
     {
         private const string HorizontalAxis = "Horizontal";
         
-        private readonly Character _character;
         private readonly Rigidbody2D _rigidbody;
+        private readonly MoveComponent _moveComponent;
+        private readonly RotateComponent _rotateComponent;
         private readonly PushTrigger _pushTrigger;
+        private readonly PushComponent _pushComponent;
+        private readonly ThrowUpComponent _throwUpComponent;
+        private readonly JumpComponent _jumpComponent;
 
         private Vector2 _movementInput;
         private bool _isJumpRequest;
@@ -22,13 +26,21 @@ namespace Game.Scripts.Controllers
         private bool HasInput => _movementInput.sqrMagnitude > Mathf.Epsilon * Mathf.Epsilon;
 
         public CharacterController(
-            Character character, 
             Rigidbody2D rigidbody,
-            PushTrigger pushTrigger)
+            MoveComponent moveComponent,
+            RotateComponent rotateComponent,
+            PushTrigger pushTrigger,
+            PushComponent pushComponent,
+            ThrowUpComponent throwUpComponent,
+            JumpComponent jumpComponent)
         {
-            _character = character;
             _rigidbody = rigidbody;
+            _moveComponent = moveComponent;
+            _rotateComponent = rotateComponent;
             _pushTrigger = pushTrigger;
+            _pushComponent = pushComponent;
+            _throwUpComponent = throwUpComponent;
+            _jumpComponent = jumpComponent;
         }
 
         void ITickable.Tick() => ReadMovementInput();
@@ -60,12 +72,13 @@ namespace Game.Scripts.Controllers
         {
             if (HasInput)
             {
-                _character.Move(_movementInput);
+                _moveComponent.Move(_movementInput);
+                _rotateComponent.LookInDirection(_movementInput);
             }
 
             if (_isJumpRequest)
             {
-                _character.Jump();
+                _jumpComponent.Jump();
                 _isJumpRequest = false;  
             }
 
@@ -80,27 +93,20 @@ namespace Game.Scripts.Controllers
             }
 
             var targets = GetTargetsCollection();
-            if (targets != null)
+            if (_isPushRequest)
             {
-                foreach (var target in targets)
-                {
-                    if (_isPushRequest)
-                    {
-                        var direction = target.position - _rigidbody.position;
-                        _character.Push(target, direction);
-                    }
+                _pushComponent.Push(targets, _rigidbody.position);
+            }
 
-                    if (_isThrowUpRequest)
-                    {
-                        _character.ThrowUp(target);
-                    }  
-                }
+            if (_isThrowUpRequest)
+            {
+                _throwUpComponent.ThrowUp(targets);
             }
 
             _isPushRequest = false;
             _isThrowUpRequest = false;
         }
 
-        private IEnumerable<Rigidbody2D> GetTargetsCollection() => _pushTrigger.Targets;
+        private IReadOnlyCollection<Rigidbody2D> GetTargetsCollection() => _pushTrigger.Targets;
     }
 }

@@ -5,7 +5,7 @@ namespace Game.Scripts.Triggers
 {
     public class PushTrigger : MonoBehaviour
     {
-        public IEnumerable<Rigidbody2D> Targets => _targets;
+        public IReadOnlyCollection<Rigidbody2D> Targets => _targets;
 
         private readonly HashSet<Rigidbody2D> _targets = new();
 
