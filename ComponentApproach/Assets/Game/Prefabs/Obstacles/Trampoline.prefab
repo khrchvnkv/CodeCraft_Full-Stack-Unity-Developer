@@ -241,11 +241,9 @@ GameObject:
   - component: {fileID: 4979841302588641904}
   - component: {fileID: 2682617834291874480}
   - component: {fileID: 1058206157702236535}
-  - component: {fileID: 7377807706263526097}
-  - component: {fileID: 4257424806185173347}
-  - component: {fileID: 8259622104438804248}
-  - component: {fileID: 1584858365199261877}
-  - component: {fileID: 1029222210273933216}
+  - component: {fileID: 1963888099926640308}
+  - component: {fileID: 4354431184098796664}
+  - component: {fileID: 6482369778218869544}
   m_Layer: 6
   m_Name: Trampoline
   m_TagString: Untagged
@@ -329,12 +327,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 7377807706263526097}
-  - {fileID: 4257424806185173347}
+  - {fileID: 4354431184098796664}
   _installerPrefabs: []
   _autoRun: 1
-  _kernel: {fileID: 0}
---- !u!114 &7377807706263526097
+  _kernel: {fileID: 1963888099926640308}
+--- !u!114 &1963888099926640308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -343,11 +340,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8595837930061912479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030293448e2a414a834d96aa41449135, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c47912ae4e51a84d92f1acf689997c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _springboard: {fileID: 8259622104438804248}
---- !u!114 &4257424806185173347
+--- !u!114 &4354431184098796664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -356,45 +352,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8595837930061912479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 442845c159ad4ebf9f9e9b0400390634, type: 3}
+  m_Script: {fileID: 11500000, guid: aac1930ae00043bd9a641ad80589c5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _throwUpForce: 800
+  _force: 1000
   _direction: {x: 0, y: 1}
---- !u!114 &8259622104438804248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595837930061912479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ebf9d13e7454beea4c3412d52ca44d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1584858365199261877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595837930061912479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a68da85035644a6bb39dc9cb0870c89f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1029222210273933216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595837930061912479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0a18881125341028e7bc84f6a8084be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _triggerEventReceiver: {fileID: 6482369778218869544}
   _audio: {fileID: 1617741907949594362}
+--- !u!114 &6482369778218869544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d238063b433425198b7cdb3ebb3bf2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
