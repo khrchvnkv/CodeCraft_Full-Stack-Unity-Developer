@@ -1,6 +1,6 @@
- using Game.Scripts.GameObjects.Content.Contracts;
+using Modules.Entity;
 
- namespace Game.Scripts.GameObjects.Core
+namespace Game.Scripts.GameObjects.Core
 {
     public class AttackComponent
     {
@@ -15,11 +15,11 @@
             _damage = damage;
         }
 
-        public void Attack(IDamageable damageable)
+        public void Attack(Entity entity)
         {
-            if (_condition.Invoke())
+            if (_condition.Invoke() && entity.TryGet(out HealthComponent health))
             {
-                damageable.TakeDamage(_damage);
+                health.TakeDamage(_damage);
             }
         }
 

@@ -1,15 +1,18 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Scripts.GameObjects.Core
 {
-    public class MoveComponent
+    public class MoveComponent : IFixedTickable
     {
         private readonly ICondition _condition;
         private readonly Rigidbody2D _rigidbody;
         private readonly float _movementSpeed;
 
-        public event Action<Vector2> MovedInDirection; 
+        public event Action<Vector2> MovedInDirection;
+
+        private Vector2 _direction;
 
         public MoveComponent(
             ICondition condition,
@@ -20,6 +23,8 @@ namespace Game.Scripts.GameObjects.Core
             _rigidbody = rigidbody;
             _movementSpeed = movementSpeed;
         }
+
+        public void SetDirection(in Vector2 direction) => _direction = direction;
 
         public void Move(Vector2 direction)
         {
@@ -34,7 +39,9 @@ namespace Game.Scripts.GameObjects.Core
                 MovedInDirection?.Invoke(direction);
             }
         }
-        
+
+        void IFixedTickable.FixedTick() => Move(_direction);
+
         public interface ICondition
         {
             bool Invoke();

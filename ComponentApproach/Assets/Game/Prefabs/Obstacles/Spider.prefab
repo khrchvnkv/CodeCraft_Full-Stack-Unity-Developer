@@ -460,7 +460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66bf8625a7374d85b12713ec2e9e3a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entity: {fileID: 4298018549915162856}
   _rigidbody: {fileID: 4015829716640782646}
   _health: 3
   _healthAudio: {fileID: 4159969622148596868}
@@ -669,8 +668,8 @@ GameObject:
   - component: {fileID: 3105770917179402914}
   - component: {fileID: 4015829716640782646}
   - component: {fileID: 7422560000825944449}
-  - component: {fileID: 4298018549915162856}
   - component: {fileID: 6631136136374388684}
+  - component: {fileID: 4637715029353644076}
   m_Layer: 8
   m_Name: <Spider>
   m_TagString: Untagged
@@ -766,19 +765,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.75}
   m_EdgeRadius: 0
---- !u!114 &4298018549915162856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8665529919726988981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 536b3a9e7512446d8f22357d28bcaac0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _context: {fileID: 8085926205667205041}
 --- !u!114 &6631136136374388684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,3 +777,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd0a7bca6b14bb78fc84cab05b44324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4637715029353644076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665529919726988981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 284a5751472b4beb939f9945b68dcba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _context: {fileID: 8085926205667205041}

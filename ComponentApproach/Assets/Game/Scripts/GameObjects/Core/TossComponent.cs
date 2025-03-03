@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Modules.Entity;
 using UnityEngine;
 
 namespace Game.Scripts.GameObjects.Core
@@ -21,6 +22,14 @@ namespace Game.Scripts.GameObjects.Core
             _condition = condition;
             _force = force;
             _direction = direction;
+        }
+
+        public void Toss(in Entity entity)
+        {
+            if (entity.TryGet(out Rigidbody2D rigidbody2D))
+            {
+                Toss(rigidbody2D);
+            }
         }
 
         public void Toss(in Rigidbody2D rigidbody)

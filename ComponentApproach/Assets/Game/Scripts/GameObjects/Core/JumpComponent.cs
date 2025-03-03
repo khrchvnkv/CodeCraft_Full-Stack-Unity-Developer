@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Scripts.GameObjects.Core
 {
-    public class JumpComponent
+    public class JumpComponent : IFixedTickable
     {
         private readonly ICondition _condition;
         private readonly Rigidbody2D _rigidbody;
@@ -11,6 +12,7 @@ namespace Game.Scripts.GameObjects.Core
         private readonly float _cooldown;
 
         private float? _lastJumpTime;
+        private bool _jumpRequested;
 
         public event Action Jumped; 
 
@@ -25,8 +27,19 @@ namespace Game.Scripts.GameObjects.Core
             _jumpForce = jumpForce;
             _cooldown = cooldown;
         }
-        
-        public void Jump()
+
+        void IFixedTickable.FixedTick()
+        {
+            if (_jumpRequested)
+            {
+                Jump();
+                _jumpRequested = false;
+            }
+        }
+
+        public void RequestJump() => _jumpRequested = true;
+
+        private void Jump()
         {
             if (_condition.Invoke() && CanJump())
             {
@@ -42,7 +55,7 @@ namespace Game.Scripts.GameObjects.Core
 
         private bool CanJump() => 
             !_lastJumpTime.HasValue || Time.time - _lastJumpTime.Value >= _cooldown;
-        
+
         public interface ICondition
         {
             bool Invoke();

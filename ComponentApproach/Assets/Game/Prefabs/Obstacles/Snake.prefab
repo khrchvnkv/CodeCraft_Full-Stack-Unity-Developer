@@ -481,7 +481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6401b1c776d949a6855d50af2e1ceda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entity: {fileID: 3309897160076174074}
   _rigidbody: {fileID: 1745589832700849}
   _speed: 1.75
   _waypoints:
@@ -544,8 +543,8 @@ GameObject:
   - component: {fileID: 1745589832700849}
   - component: {fileID: 519640766865834813}
   - component: {fileID: 464711613102087323}
-  - component: {fileID: 3309897160076174074}
   - component: {fileID: 5712459627708291546}
+  - component: {fileID: 2180781670000679787}
   m_Layer: 8
   m_Name: <Snake>
   m_TagString: Untagged
@@ -687,19 +686,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 0.75}
   m_EdgeRadius: 0
---- !u!114 &3309897160076174074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521204571576199944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 530911c049c74aa9b17f798551df6097, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _context: {fileID: 9123454470994942323}
 --- !u!114 &5712459627708291546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,6 +698,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd0a7bca6b14bb78fc84cab05b44324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2180781670000679787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521204571576199944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 284a5751472b4beb939f9945b68dcba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _context: {fileID: 9123454470994942323}
 --- !u!1 &9168432786817898581
 GameObject:
   m_ObjectHideFlags: 0
