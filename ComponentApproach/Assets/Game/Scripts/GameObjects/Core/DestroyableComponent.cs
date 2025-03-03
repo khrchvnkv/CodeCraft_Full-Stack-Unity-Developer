@@ -6,6 +6,8 @@ namespace Game.Scripts.GameObjects.Core
     {
         private readonly GameObject _deactivatingGameObject;
 
+        public bool IsDestroyable { get; private set; }
+        
         public DestroyableComponent(GameObject deactivatingGameObject)
         {
             _deactivatingGameObject = deactivatingGameObject;
@@ -14,6 +16,7 @@ namespace Game.Scripts.GameObjects.Core
         public void Destroy()
         {
             _deactivatingGameObject.SetActive(false);
+            IsDestroyable = true;
         }
     }
 }

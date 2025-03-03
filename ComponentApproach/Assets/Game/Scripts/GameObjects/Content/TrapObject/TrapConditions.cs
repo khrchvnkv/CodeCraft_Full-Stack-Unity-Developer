@@ -6,10 +6,17 @@ namespace Game.Scripts.GameObjects.Content.TrapObject
         PushComponent.ICondition,
         AttackComponent.ICondition
     {
-        private bool IsGameObjectActive() => true;
+        private readonly DestroyableComponent _destroyableComponent;
 
-        bool PushComponent.ICondition.Invoke() => IsGameObjectActive();
+        public TrapConditions(DestroyableComponent destroyableComponent)
+        {
+            _destroyableComponent = destroyableComponent;
+        }
 
-        bool AttackComponent.ICondition.Invoke() => IsGameObjectActive();
+        private bool IsObjectNotDestroyable() => !_destroyableComponent.IsDestroyable;
+
+        bool PushComponent.ICondition.Invoke() => IsObjectNotDestroyable();
+
+        bool AttackComponent.ICondition.Invoke() => IsObjectNotDestroyable();
     }
 }
