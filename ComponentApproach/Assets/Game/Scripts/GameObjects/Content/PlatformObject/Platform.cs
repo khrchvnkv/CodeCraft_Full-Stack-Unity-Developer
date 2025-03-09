@@ -14,21 +14,24 @@ namespace Game.Scripts.GameObjects.Content.PlatformObject
     {
         private readonly TriggerEventReceiver _triggerEventReceiver;
         private readonly Rigidbody2D _rigidbody;
+        private readonly WaypointMovementComponent _waypointMovementComponent;
         private readonly HashSet<Rigidbody2D> _movables = new();
 
         private Vector2? _lastPosition;
 
         public Platform(
             TriggerEventReceiver triggerEventReceiver, 
-            Rigidbody2D rigidbody)
+            Rigidbody2D rigidbody,
+            WaypointMovementComponent waypointMovementComponent)
         {
             _triggerEventReceiver = triggerEventReceiver;
             _rigidbody = rigidbody;
+            _waypointMovementComponent = waypointMovementComponent;
         }
 
         private void OnTriggerEnter(Entity other)
         {
-            if (other.TryGetComponent(out Rigidbody2D platformMovable))
+            if (other.TryGet(out Rigidbody2D platformMovable))
             {
                 _movables.Add(platformMovable);
             }
@@ -36,7 +39,7 @@ namespace Game.Scripts.GameObjects.Content.PlatformObject
         
         private void OnTriggerExit(Entity other)
         {
-            if (other.TryGetComponent(out Rigidbody2D platformMovable))
+            if (other.TryGet(out Rigidbody2D platformMovable))
             {
                 _movables.Remove(platformMovable);
             }
@@ -49,6 +52,14 @@ namespace Game.Scripts.GameObjects.Content.PlatformObject
         }
 
         void IFixedTickable.FixedTick()
+        {
+            MoveByWaypoints();
+            MovePlatformMovables();
+        }
+
+        private void MoveByWaypoints() => _waypointMovementComponent.Move();
+
+        private void MovePlatformMovables()
         {
             if (!_lastPosition.HasValue)
             {

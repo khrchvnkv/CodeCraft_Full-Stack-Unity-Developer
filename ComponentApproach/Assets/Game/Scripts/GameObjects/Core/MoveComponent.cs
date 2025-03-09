@@ -15,7 +15,7 @@ namespace Game.Scripts.GameObjects.Core
         private Vector2 _direction;
 
         public MoveComponent(
-            ICondition condition,
+            [InjectOptional] ICondition condition,
             Rigidbody2D rigidbody, 
             float movementSpeed)
         {
@@ -28,16 +28,15 @@ namespace Game.Scripts.GameObjects.Core
 
         public void Move(Vector2 direction)
         {
-            if (_condition.Invoke())
-            {
-                var deltaTime = Time.deltaTime;
-                direction = direction.normalized;
-                var deltaMovement= direction * _movementSpeed * deltaTime;
-                deltaMovement.x += _rigidbody.velocity.x * deltaTime;
-                _rigidbody.position += deltaMovement;
+            if (_condition != null && !_condition.Invoke()) return;
 
-                MovedInDirection?.Invoke(direction);
-            }
+            var deltaTime = Time.deltaTime;
+            direction = direction.normalized;
+            var deltaMovement= direction * _movementSpeed * deltaTime;
+            deltaMovement.x += _rigidbody.velocity.x * deltaTime;
+            _rigidbody.position += deltaMovement;
+
+            MovedInDirection?.Invoke(direction);
         }
 
         void IFixedTickable.FixedTick() => Move(_direction);

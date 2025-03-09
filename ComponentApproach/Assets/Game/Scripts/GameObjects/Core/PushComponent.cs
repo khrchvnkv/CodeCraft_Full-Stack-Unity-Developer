@@ -7,6 +7,7 @@ namespace Game.Scripts.GameObjects.Core
     public class PushComponent
     {
         private readonly ICondition _condition;
+        private readonly Rigidbody2D _rigidbody;
         private readonly float _force;
 
         public event Action Pushed;
@@ -14,9 +15,11 @@ namespace Game.Scripts.GameObjects.Core
 
         public PushComponent(
             ICondition condition,
+            Rigidbody2D rigidbody,
             float force)
         {
             _condition = condition;
+            _rigidbody = rigidbody;
             _force = force;
         }
         
@@ -29,7 +32,27 @@ namespace Game.Scripts.GameObjects.Core
             }
         }
 
-        public void Push(in KeyValuePair<Rigidbody2D, Vector2>[] collection)
+        public void Push(in IReadOnlyCollection<Rigidbody2D> targets)
+        {
+            if (targets.Count == 0)
+            {
+                EmptyPush();
+                return;
+            }
+            
+            KeyValuePair<Rigidbody2D, Vector2>[] pushData = new KeyValuePair<Rigidbody2D, Vector2>[targets.Count];
+            var index = 0;
+            foreach (var body in targets)
+            {
+                var direction = body.position - _rigidbody.position;
+                pushData[index] = new KeyValuePair<Rigidbody2D, Vector2>(body, direction);
+                index++;
+            }
+            
+            Push(pushData);
+        }
+
+        private void Push(in KeyValuePair<Rigidbody2D, Vector2>[] collection)
         {
             if (_condition.Invoke())
             {

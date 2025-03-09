@@ -53,7 +53,6 @@ namespace Game.Scripts.GameObjects.Content.CharacterObject
         {
             InstallCommon();
             InstallComponents();
-            InstallControllers();
         }
 
         private void InstallCommon()
@@ -158,13 +157,6 @@ namespace Game.Scripts.GameObjects.Content.CharacterObject
                 .BindInterfacesAndSelfTo<RotateComponent>()
                 .AsSingle()
                 .WithArguments(_rotatedTransforms);
-        }
-
-        private void InstallControllers()
-        {
-            Container
-                .BindInterfacesAndSelfTo<RotateByMovementController>()
-                .AsSingle();
         }
     }
 }

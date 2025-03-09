@@ -67,10 +67,6 @@ namespace Game.Scripts.GameObjects.Content.SpiderObject
                 .WithArguments(_waypoints);
 
             Container
-                .BindInterfacesAndSelfTo<WaypointMovementController>()
-                .AsSingle();
-
-            Container
                 .BindInterfacesAndSelfTo<AttackComponent>()
                 .AsSingle()
                 .WithArguments(_damage);

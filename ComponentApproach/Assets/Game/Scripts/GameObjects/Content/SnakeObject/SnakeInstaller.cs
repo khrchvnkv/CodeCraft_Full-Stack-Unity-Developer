@@ -69,10 +69,6 @@ namespace Game.Scripts.GameObjects.Content.SnakeObject
                 .WithArguments(_waypoints);
 
             Container
-                .BindInterfacesAndSelfTo<WaypointMovementController>()
-                .AsSingle();
-
-            Container
                 .BindInterfacesAndSelfTo<AttackComponent>()
                 .AsSingle()
                 .WithArguments(_damage);
@@ -91,10 +87,6 @@ namespace Game.Scripts.GameObjects.Content.SnakeObject
                 .BindInterfacesAndSelfTo<RotateComponent>()
                 .AsSingle()
                 .WithArguments(_rotateTransforms);
-
-            Container
-                .BindInterfacesAndSelfTo<RotateByMovementController>()
-                .AsSingle();
         }
     }
 }

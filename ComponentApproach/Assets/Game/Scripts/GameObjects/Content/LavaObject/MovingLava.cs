@@ -1,17 +1,17 @@
 using Game.Scripts.GameObjects.Core;
 using Zenject;
 
-namespace Game.Scripts.GameContext
+namespace Game.Scripts.GameObjects.Content.LavaObject
 {
-    public class WaypointMovementController : IFixedTickable
+    public class MovingLava : IFixedTickable
     {
         private readonly WaypointMovementComponent _waypointMovementComponent;
 
-        public WaypointMovementController(WaypointMovementComponent waypointMovementComponent)
+        public MovingLava(WaypointMovementComponent waypointMovementComponent)
         {
             _waypointMovementComponent = waypointMovementComponent;
         }
-
+        
         void IFixedTickable.FixedTick() => _waypointMovementComponent.Move();
     }
 }

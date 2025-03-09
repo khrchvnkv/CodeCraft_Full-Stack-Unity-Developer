@@ -14,12 +14,12 @@ namespace Game.Scripts.GameObjects.Content.LavaObject
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesAndSelfTo<MovingLavaConditions>()
+                .Bind<Rigidbody2D>()
+                .FromInstance(_rigidbody)
                 .AsSingle();
 
             Container
-                .Bind<Rigidbody2D>()
-                .FromInstance(_rigidbody)
+                .BindInterfacesAndSelfTo<MovingLava>()
                 .AsSingle();
 
             Container
@@ -31,10 +31,6 @@ namespace Game.Scripts.GameObjects.Content.LavaObject
                 .BindInterfacesAndSelfTo<WaypointMovementComponent>()
                 .AsSingle()
                 .WithArguments(_waypoints);
-
-            Container
-                .BindInterfacesAndSelfTo<WaypointMovementController>()
-                .AsSingle();
         }
     }
 }

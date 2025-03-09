@@ -25,10 +25,6 @@ namespace Game.Scripts.GameObjects.Content.PlatformObject
                 .WithArguments(_platformMovablesTriggerEventReceiver);
 
             Container
-                .BindInterfacesAndSelfTo<PlatformConditions>()
-                .AsSingle();
-
-            Container
                 .BindInterfacesAndSelfTo<MoveComponent>()
                 .AsSingle()
                 .WithArguments(_speed);
@@ -37,10 +33,6 @@ namespace Game.Scripts.GameObjects.Content.PlatformObject
                 .BindInterfacesAndSelfTo<WaypointMovementComponent>()
                 .AsSingle()
                 .WithArguments(_waypoints);
-
-            Container
-                .BindInterfacesAndSelfTo<WaypointMovementController>()
-                .AsSingle();
         }
     }
 }
